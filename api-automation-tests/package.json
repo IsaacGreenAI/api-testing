@@ -1,0 +1,46 @@
+{
+  "name": "api-automation-tests",
+  "version": "1.0.0",
+  "description": "api automation tests for the api-testing project",
+  "author": "",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/IsaacGreenAI/api-testing"
+  },
+  "scripts": {
+    "lint": "eslint ./specs/**/*.ts",
+    "pretest": "npm run lint -- --fix",
+    "test": "jest --runInBand",
+    "debug": "jest <SPEC FILE NAME HERE> --runInBand"
+  },
+  "dependencies": {
+    "axios": "^1.7.4"
+  },
+  "devDependencies": {
+    "@types/jest": "^29.5.12",
+    "@types/lodash": "^4.17.7",
+    "@types/node": "^22.5.0",
+    "@typescript-eslint/eslint-plugin": "^8.3.0",
+    "@typescript-eslint/parser": "^8.3.0",
+    "eslint": "^8.56.0",
+    "jest": "^29.7.0",
+    "lodash": "^4.17.21",
+    "ts-jest": "^29.2.5",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.5.4"
+  },
+  "jest": {
+    "preset": "ts-jest",
+    "testEnvironment": "node",
+    "verbose": true,
+    "testTimeout": 30000,
+    "collectCoverage": true,
+    "coverageDirectory": "./coverage",
+    "testMatch": [
+      "**/specs/**/*.ts"
+    ]
+  }
+}
+
+
