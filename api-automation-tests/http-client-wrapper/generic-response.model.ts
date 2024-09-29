@@ -1,7 +1,7 @@
 /**
  * Generic response object that can be used with strongly type response objects from any service
  */
-export class GenericResponse<T> {
+export class TResponse<T> {
 
   /**
    * Configuration settings used to make the request
