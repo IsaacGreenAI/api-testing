@@ -13,5 +13,6 @@
     "strictNullChecks": false,
     "strictPropertyInitialization": false,
     "alwaysStrict": true,
-  }
+  },
+  "exclude": ["./coverage"]
 }
