@@ -7,8 +7,9 @@
       "request": "launch",
       "program": "${workspaceFolder}/node_modules/jest/.bin/jest.js",
       "args": [
-        "<SPEC FILE NAME HERE>",
-        "--runInBand"
+        "--runInBand",
+        "<SPEC FILE NAME HERE>"
+
       ],
       "console": "integratedTerminal",
       "internalConsoleOptions": "neverOpen",
@@ -23,8 +24,9 @@
       "request": "launch",
       "program": "${workspaceFolder}/node_modules/jest/.bin/jest.js",
       "args": [
-        "<SPEC FILE NAME HERE>",
-        "--runInBand"
+        "--runInBand",
+        "<SPEC FILE NAME HERE>"
+
       ],
       "console": "integratedTerminal",
       "internalConsoleOptions": "neverOpen",
