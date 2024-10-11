@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
-    "target": "ESNext", //TODO: will need to get this to esnext
-    "module": "commonjs", //TODO: need to get this to esnext for EMScript modules -> chai five
+    "target": "ES2023",
+    "module": "commonjs",
     "esModuleInterop": true,
     "allowJs": true,
     "checkJs": false,
