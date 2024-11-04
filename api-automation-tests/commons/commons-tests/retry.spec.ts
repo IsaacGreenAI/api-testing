@@ -5,7 +5,7 @@ jest.mock('../sleep', () => ({
   sleep: jest.fn().mockResolvedValue(undefined)
 }));
 
-describe('retry function', () => {
+describe('GIVEN the retry function', () => {
   let expectedResults: object;
 
   beforeEach(() => {
@@ -13,37 +13,43 @@ describe('retry function', () => {
     expectedResults = { status: 200, statusText: 'ok' };
   });
 
-  it('should resolve if the function succeeds', async () => {
-    const mockFunction = jest.fn().mockResolvedValueOnce(expectedResults);
+  describe('WHEN the callback function succeeds', () => {
+    it('THEN it resolves if the function succeeds', async () => {
+      const mockFunction = jest.fn().mockResolvedValueOnce(expectedResults);
 
-    const response = await retry(mockFunction, 3, 100, 5000);
+      const response = await retry(mockFunction, 3, 100, 5000);
 
-    expect(response).toBe(expectedResults);
-    expect(mockFunction).toHaveBeenCalledTimes(1);
-    expect(sleepModule.sleep).not.toHaveBeenCalled();
+      expect(response).toBe(expectedResults);
+      expect(mockFunction).toHaveBeenCalledTimes(1);
+      expect(sleepModule.sleep).not.toHaveBeenCalled();
+    });
   });
 
-  it('should should retry on failure', async () => {
-    const mockFunction = jest.fn()
-      .mockRejectedValueOnce(new Error('error'))
-      .mockRejectedValueOnce(new Error('error'))
-      .mockResolvedValue(expectedResults);
+  describe('WHEN the callback function fails', () => {
+    it('THEN it retries on failure', async () => {
+      const mockFunction = jest.fn()
+        .mockRejectedValueOnce(new Error('error'))
+        .mockRejectedValueOnce(new Error('error'))
+        .mockResolvedValue(expectedResults);
 
-    const response = await retry(mockFunction, 3, 100, 5000);
+      const response = await retry(mockFunction, 3, 100, 5000);
 
-    expect(response).toBe(expectedResults);
-    expect(mockFunction).toHaveBeenCalledTimes(3);
-    expect(sleepModule.sleep).toHaveBeenCalledTimes(2);
+      expect(response).toBe(expectedResults);
+      expect(mockFunction).toHaveBeenCalledTimes(3);
+      expect(sleepModule.sleep).toHaveBeenCalledTimes(2);
+    });
   });
 
-  it('should throw an error after maximum retries', async () => {
-    const mockFunction = jest.fn()
-      .mockRejectedValueOnce(new Error('error'))
-      .mockRejectedValueOnce(new Error('error'))
-      .mockRejectedValueOnce(new Error('error'));
+  describe('WHEN the callback function fails after maximum retries', () => {
+    it('THEN it throws an error after maximum retries', async () => {
+      const mockFunction = jest.fn()
+        .mockRejectedValueOnce(new Error('error'))
+        .mockRejectedValueOnce(new Error('error'))
+        .mockRejectedValueOnce(new Error('error'));
 
-    await expect(retry(mockFunction, 2, 100, 5000)).rejects.toThrow('Max retries reached');
-    expect(mockFunction).toHaveBeenCalledTimes(3);
-    expect(sleepModule.sleep).toHaveBeenCalledTimes(2);
+      await expect(retry(mockFunction, 2, 100, 5000)).rejects.toThrow('Max retries reached');
+      expect(mockFunction).toHaveBeenCalledTimes(3);
+      expect(sleepModule.sleep).toHaveBeenCalledTimes(2);
+    });
   });
 });

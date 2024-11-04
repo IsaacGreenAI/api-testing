@@ -1,12 +1,14 @@
 import { sleep } from '../sleep';
 
-describe('sleep', () => {
+describe('GIVEN the sleep function', () => {
   jest.useFakeTimers();
 
-  it('should resolve after the specified time', async () => {
-    const sleepTime = 1000;
-    const sleepPromise = sleep(sleepTime);
-    jest.advanceTimersByTime(sleepTime);
-    await expect(sleepPromise).resolves.toBeUndefined();
+  describe('WHEN the sleep function is called', () => {
+    it('THEN it resolves after the specified time', async () => {
+      const sleepTime = 1000;
+      const sleepPromise = sleep(sleepTime);
+      jest.advanceTimersByTime(sleepTime);
+      await expect(sleepPromise).resolves.toBeUndefined();
+    });
   });
 });

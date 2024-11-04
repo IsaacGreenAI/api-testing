@@ -14,7 +14,7 @@
     "lint": "eslint ./specs/**/*.ts",
     "pretest": "npm run lint -- --fix",
     "test": "jest --runInBand",
-    "debug": "jest --runInBand <SPEC FILE NAME HERE>"
+    "debug": "jest --runInBand http-client-wrapper.spec"
   },
   "dependencies": {
     "axios": "^1.7.4"
@@ -35,7 +35,7 @@
   "jest": {
     "preset": "ts-jest",
     "testEnvironment": "node",
-    "verbose": false,
+    "verbose": true,
     "testTimeout": 6000000,
     "collectCoverage": true,
     "coverageDirectory": "./coverage"

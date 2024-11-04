@@ -1,21 +1,21 @@
 /* eslint-disable no-unused-vars */
 import { FormatDate } from '../../commons/format-date';
 
-describe('FormatDate class', () => {
+describe('GIVEN the FormatDate class', () => {
   let formatDate: FormatDate;
 
   beforeEach(() => {
     formatDate = new FormatDate();
   });
 
-  describe('withFormat method', () => {
-    it('should return the correct formatted date with defualt values', () => {
+  describe('WHEN the withFormat method is called', () => {
+    it('THEN it returns the correct formatted date with defualt values', () => {
       const date = new Date();
       const formattedDate: string = formatDate.withFormat();
       expect(formattedDate).toBe(date.toISOString().slice(0, -1)); // slice removes the Z at the end
     });
 
-    it('should return the correct formatted date with custom values', () => {
+    it('THEN it returns the correct formatted date with custom values', () => {
       const date = new Date('2021-01-01T00:00:00.000Z');
       const formattedDate: string = formatDate.withFormat('MM/dd/yyyy', date);
 
@@ -64,7 +64,7 @@ describe('FormatDate class', () => {
         .replace(/-/g, '') },
     ];
     formats.forEach(({ format, expected }) => {
-      it(`should return the correct formatted date with ${format} format`, () => {
+      it(`THEN it returns the correct formatted date with ${format} format`, () => {
         const date = new Date();
         const formattedDate: string = formatDate.withFormat(format);
 
@@ -73,14 +73,14 @@ describe('FormatDate class', () => {
     });
   });
 
-  describe('likeDateOfBirth method', () => {
-    it('should return the correct formatted date of birth with default values', () => {
+  describe('WHEN the likeDateOfBirth method is called', () => {
+    it('THEN it returns the correct formatted date of birth with default values', () => {
       const formattedDate: string = formatDate.likeDateOfBirth();
 
       expect(formattedDate).toBe(new Date().toLocaleDateString('en-US', { month: '2-digit', day: '2-digit', year: 'numeric', timeZone: 'UTC' }));
     });
 
-    it('should return the correct formatted date of birth with custom values', () => {
+    it('THEN it returns the correct formatted date of birth with custom values', () => {
       const date = new Date('1990-01-01T00:00:00.000Z');
       const formattedDate: string = formatDate.likeDateOfBirth('MM/dd/yyyy', date);
 
