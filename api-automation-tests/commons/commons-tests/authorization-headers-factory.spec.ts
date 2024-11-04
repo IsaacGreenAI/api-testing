@@ -1,6 +1,6 @@
 import { AuthHeader, AuthorizationHeadersFactory } from '../authorization-headers-factory';
 
-// we could definitely not use GHERKIN syntax here and save a describe block or two, but the clarity is valuable
+// we could definitely not use GHERKIN syntax here and save describe blocks, but the clarity is valuable
 
 describe('GIVEN the AuthorizationHeaderFactory class', () => {
   let authorizationHeader: AuthorizationHeadersFactory;
