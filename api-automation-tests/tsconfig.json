@@ -12,7 +12,11 @@
     "noImplicitThis": true,
     "strictNullChecks": false,
     "strictPropertyInitialization": false,
-    "alwaysStrict": true,
+    "alwaysStrict": true
   },
-  "exclude": ["./coverage"]
+  "exclude": ["./coverage"],
+  "include": [
+    "./commons/**/*.ts",
+    "./specs/**/*.ts"
+  ]
 }

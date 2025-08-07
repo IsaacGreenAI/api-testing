@@ -14,7 +14,7 @@
     "lint": "eslint ./specs/**/*.ts",
     "pretest": "npm run lint -- --fix",
     "test": "jest --runInBand",
-    "debug": "jest --runInBand <SPEC FILE NAME HERE>"
+    "debug": "jest --runInBand url-builder.spec.ts"
   },
   "dependencies": {
     "axios": "^1.7.4"
@@ -38,6 +38,8 @@
     "verbose": true,
     "testTimeout": 6000000,
     "collectCoverage": true,
-    "coverageDirectory": "./coverage"
+    "coverageDirectory": "./coverage",
+    "setupFilesAfterEnv": ["./jest.setup.js"],
+    "reporters": ["default"]
   }
 }

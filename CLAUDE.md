@@ -1,0 +1,80 @@
+# CLAUDE.md
+
+This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+
+## Development Commands
+
+**Testing Commands:**
+- `npm run test` - Run all tests with coverage
+- `npm run test-specs` - Run only spec tests (specs/*)
+- `npm run test-commons` - Run only commons utility tests
+- `npm run debug` - Debug a specific test
+
+**Code Quality:**
+- `npm run lint` - Run ESLint on specs directory
+- `npm run pretest` - Automatically runs lint with --fix before tests
+
+**Working Directory:**
+All commands should be run from `api-automation-tests/` directory.
+
+## Code Architecture
+
+**Project Structure:**
+- `commons/` - Production-ready utility functions and classes
+  - **Enhanced API Client** - HTTP client with batch operations, retry logic, and health checks
+  - **Test Data Factory** - Realistic data generation for users, payments, products, orders
+  - **Test Runner** - Data-driven testing framework with multiple data providers
+  - **Authorization Factory** - Flexible authentication (Basic/Bearer/Custom/API Key)
+  - **Configuration Management** - Environment-specific settings and feature flags
+  - URL builder, retry mechanism, date formatting, and utility functions
+- `config/` - Centralized configuration management with validation
+- `agents/` - AI-powered testing agents for specialized testing scenarios
+- `specs/` - Comprehensive test specifications
+- `commons-tests/` - Unit tests for all utility functions
+
+**Key Components:**
+
+**Enhanced API Client (`commons/api-client.ts`):**
+- Production-ready HTTP client with authentication presets
+- Batch request processing with concurrency control
+- Built-in retry logic and health check capabilities
+- Support for Bearer, Basic Auth, and API Key authentication
+
+**Test Data Factory (`commons/test-data-factory.ts`):**
+- Generates realistic test data for users, payments, products, orders
+- Configurable data generation with override capabilities
+- Consistent, predictable data for test isolation
+- Support for various business domains and use cases
+
+**Configuration Management (`config/test-config.ts`):**
+- Environment-specific configuration with validation
+- Feature flags for conditional test execution
+- Secure credential management
+- Support for multiple environments (dev, staging, prod)
+
+**Data-Driven Testing (`commons/test-runner.ts`):**
+- Execute tests with multiple data providers (factory, file, API, database)
+- Batch test execution with configurable concurrency
+- Test result aggregation and reporting
+- Support for parameterized test scenarios
+
+**AI Testing Agents (`agents/`):**
+- **Security Auditor** - OWASP API Top 10, penetration testing, compliance validation
+- **Performance Engineer** - Load testing, scalability analysis, bottleneck identification
+- **Automation Specialist** - CI/CD integration, framework development, contract testing
+- **Integration Tester** - End-to-end workflows, third-party API validation, microservices testing
+- **Documentation Analyst** - OpenAPI specifications, developer experience optimization
+
+**Testing Framework:**
+- Jest with TypeScript integration
+- Custom matchers for API response validation
+- Global test utilities and helper functions
+- Comprehensive error handling and logging
+- Support for parallel test execution
+
+**Security and Best Practices:**
+- No hardcoded credentials or sensitive data
+- Proper test isolation and cleanup procedures
+- Environment-specific configuration validation
+- Comprehensive error handling and recovery
+- Production-ready code quality standards

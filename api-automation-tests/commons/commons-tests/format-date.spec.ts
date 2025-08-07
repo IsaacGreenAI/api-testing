@@ -10,9 +10,9 @@ describe('GIVEN the FormatDate class', () => {
 
   describe('WHEN the withFormat method is called', () => {
     it('THEN it returns the correct formatted date with defualt values', () => {
-      const date = new Date();
-      const formattedDate: string = formatDate.withFormat();
-      expect(formattedDate).toBe(date.toISOString().slice(0, -1)); // slice removes the Z at the end
+      const testDate = new Date('2021-01-01T12:30:45.123Z');
+      const formattedDate: string = formatDate.withFormat('yyyy-MM-ddThh:mm:ss.fff', testDate, 'UTC');
+      expect(formattedDate).toBe('2021-01-01T12:30:45.123');
     });
 
     it('THEN it returns the correct formatted date with custom values', () => {
