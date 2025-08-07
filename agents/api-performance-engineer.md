@@ -198,7 +198,7 @@ Replace these placeholders in your prompts:
 - `[INSERT_TASK_HERE]` - Specific performance engineering task
 - `[EXPECTED_LOAD]` - Concurrent users, requests per second, etc.
 - `[PERFORMANCE_TARGETS]` - Response time, throughput requirements
-- `[TECHNOLOGY_STACK]` - Node.js, Python, Java, database systems
+- `[TECHNOLOGY_STACK]` - Node.js, Python, TypeScript, database systems
 - `[INFRASTRUCTURE]` - Cloud provider, container platform, etc.
 - `[BUSINESS_CONTEXT]` - Industry, use case, critical periods
 

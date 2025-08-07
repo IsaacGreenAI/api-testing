@@ -188,7 +188,7 @@ Replace these placeholders in your prompts:
 - `[API_TYPE]` - REST, GraphQL, gRPC, etc.
 - `[INDUSTRY]` - Healthcare, financial, e-commerce, etc.
 - `[COMPLIANCE_REQUIREMENTS]` - GDPR, HIPAA, PCI DSS, etc.
-- `[TECHNOLOGY_STACK]` - Node.js, Python, Java, .NET, etc.
+- `[TECHNOLOGY_STACK]` - Node.js, Python, TypeScript, .NET, etc.
 - `[DEPLOYMENT_ENVIRONMENT]` - Cloud, on-premise, hybrid, etc.
 
 ## Success Metrics
