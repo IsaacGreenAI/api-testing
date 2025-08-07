@@ -2,14 +2,13 @@
 
 ## Overview
 
-This is a production-ready API testing framework built with **TypeScript**, **Jest**, and **Allure reporting**. The framework provides comprehensive tools for API testing including security auditing, performance testing, integration validation, and automated documentation generation.
+This is a production-ready API testing framework built with **TypeScript** and **Jest**. The framework provides comprehensive tools for API testing including security auditing, performance testing, integration validation, and automated documentation generation.
 
 ## Quick Start
 
 ### Prerequisites
 - Node.js 18+ 
 - npm or yarn
-- Java 8+ (for Allure reporting)
 
 ### Installation
 ```bash
@@ -24,9 +23,6 @@ npm install
 # Run all tests
 npm test
 
-# Run tests with Allure reporting
-npm run test:allure
-
 # Run only integration tests
 npm run test-specs
 
@@ -37,14 +33,13 @@ npm run test-commons
 npm run debug
 ```
 
-#### Allure Reporting
+#### Test Coverage
 ```bash
-# Generate and open Allure report
-npm run allure:generate
-npm run allure:open
+# Tests include coverage reports by default
+npm test
 
-# Serve Allure results (live)
-npm run allure:serve
+# View coverage in ./coverage directory
+open coverage/lcov-report/index.html
 ```
 
 ## Framework Architecture
@@ -127,23 +122,22 @@ if (config.isFeatureEnabled('paymentProcessing')) {
 }
 ```
 
-#### **Allure Integration**
+#### **Custom Jest Matchers**
 ```typescript
 describe('Payment API', () => {
   it('should process payment', async () => {
-    if (global.allure) {
-      global.allure.description('Test payment processing with valid data');
-      global.allure.severity('critical');
-      global.allure.tag('payment');
-      global.allure.owner('Payment Team');
-      global.allure.step('Generate payment data');
-      global.allure.attachment('Payment Request', JSON.stringify(paymentData), 'application/json');
-    }
+    global.testUtils.step('Generate payment data', () => {
+      paymentData = testDataFactory.generatePaymentData();
+    });
     
     const response = await paymentAPI.processPayment(paymentData);
     
+    // Custom matchers for API validation
     expect(response).toHaveValidApiResponse();
     expect(response.data).toMatchApiSchema(['id', 'status', 'amount']);
+    
+    // Attach response data for debugging
+    global.testUtils.attachApiResponse(response);
   });
 });
 ```
@@ -216,14 +210,14 @@ if (!validation.valid) {
 
 ## Reporting and Analytics
 
-### 📊 Allure Reports
-Rich HTML reports with:
-- **Test execution timeline**
-- **Step-by-step test breakdown**
-- **Request/response attachments**
-- **Environment information**
-- **Trend analysis and history**
-- **Categorized failure analysis**
+### 📊 Jest Coverage Reports
+Comprehensive test reporting with:
+- **Test execution summaries**
+- **Code coverage metrics**
+- **Pass/fail statistics**
+- **Test timing analysis**
+- **Console output capture**
+- **Error stack traces**
 
 ### 📈 Coverage Reports
 - **Code coverage** via Jest
@@ -240,8 +234,9 @@ const metrics = {
   errorRate: failures / totalRequests
 };
 
-// Attach to Allure report
-global.allure.attachment('Performance Metrics', JSON.stringify(metrics), 'application/json');
+// Log metrics for analysis
+global.testUtils.attachTestData(metrics, 'Performance Metrics');
+console.log('Performance Metrics:', metrics);
 ```
 
 ## AI-Powered Testing Agents
@@ -337,14 +332,14 @@ const client = ApiClient.withBearerAuth(baseUrl, token, {
 const uniqueEmail = `test.${Date.now()}@example.com`;
 ```
 
-#### **Allure Report Generation**
+#### **Coverage Report Issues**
 ```bash
-# Ensure Java is installed
-java -version
+# Clear previous coverage data
+rm -rf coverage
+npm test
 
-# Clear previous results
-rm -rf allure-results allure-report
-npm run test:allure
+# View detailed coverage
+open coverage/lcov-report/index.html
 ```
 
 ### Debug Mode
@@ -361,7 +356,7 @@ npm run debug -- user-management.spec.ts
 ### Adding New Test Suites
 1. Create test file in `/specs` directory
 2. Use framework utilities and patterns
-3. Add appropriate Allure annotations
+3. Follow Given-When-Then test naming
 4. Include data cleanup procedures
 5. Update documentation
 
