@@ -9,7 +9,6 @@ global.testUtils = {
   formatTestData: (data) => JSON.stringify(data, null, 2),
   generateTimestamp: () => new Date().toISOString(),
   attachApiResponse: (response, name = 'API Response') => {
-    // Response attachment functionality removed (was Allure-specific)
     console.log(`${name}:`, {
       status: response.status,
       statusText: response.statusText,
@@ -18,7 +17,6 @@ global.testUtils = {
     });
   },
   attachTestData: (data, name = 'Test Data') => {
-    // Test data attachment functionality removed (was Allure-specific)
     console.log(`${name}:`, data);
   },
   step: (stepName, fn) => {
