@@ -175,7 +175,6 @@ EMAIL_API_KEY=sg.test_key_123
 
 # Feature Flags
 ENABLE_PAYMENT_TESTS=true
-ENABLE_SECURITY_TESTS=true
 
 # Test Execution
 PARALLEL_TESTS=true

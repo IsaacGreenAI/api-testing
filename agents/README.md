@@ -45,10 +45,10 @@ SPECIFIC TASK: Test payment gateway integrations with failure scenario validatio
 ```typescript
 Task({
   subagent_type: "general-purpose",
-  description: "API documentation audit", 
+  description: "API documentation analysis", 
   prompt: `[See api-documentation-analyst.md template]
   
-SPECIFIC TASK: Audit and improve developer portal documentation for public API platform`
+SPECIFIC TASK: Analyze and improve developer portal documentation for public API platform`
 })
 ```
 
@@ -129,7 +129,7 @@ Add new agents to this README with:
 
 ### Domain-Specific API Experts
 - **Healthcare API Compliance** - FHIR standards, HIPAA compliance, medical data validation
-- **Financial API Auditor** - PCI DSS compliance, payment processing, fraud prevention
+- **Financial API Specialist** - Payment processing validation, transaction testing
 - **IoT API Specialist** - Device communication, telemetry validation, edge computing
 - **Gaming API Specialist** - Real-time multiplayer, leaderboards, matchmaking systems
 
