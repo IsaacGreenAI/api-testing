@@ -1,14 +1,12 @@
 # api-testing
 🚀 Professional API Testing Framework
 
-A production-ready API testing framework featuring **AI-powered testing agents**, **comprehensive automation**, **security auditing**, and **advanced reporting** with **Jest coverage reporting**.
+A production-ready API testing framework featuring **AI-powered testing agents**, **comprehensive automation**, and **advanced reporting** with **Jest coverage reporting**.
 
 ## ✨ Key Features
 
-- **🤖 AI Testing Agents** - Specialized agents for security, performance, automation, integration, and documentation
+- **🤖 AI Testing Agents** - Specialized agents for automation, integration, and documentation
 - **📊 Jest Coverage Reports** - Comprehensive test coverage and execution reporting  
-- **🔒 Security Testing** - OWASP API Top 10 vulnerability assessment and penetration testing
-- **⚡ Performance Testing** - Load testing, stress testing, and scalability validation
 - **🔗 Integration Testing** - Third-party API validation and microservices communication testing
 - **📋 Data-Driven Testing** - Realistic test data generation and parameterized test execution
 - **🛠️ Production-Ready Utilities** - Enhanced HTTP client, retry mechanisms, and configuration management

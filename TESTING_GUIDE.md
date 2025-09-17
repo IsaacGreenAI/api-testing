@@ -2,7 +2,7 @@
 
 ## Overview
 
-This is a production-ready API testing framework built with **TypeScript** and **Jest**. The framework provides comprehensive tools for API testing including security auditing, performance testing, integration validation, and automated documentation generation.
+This is a production-ready API testing framework built with **TypeScript** and **Jest**. The framework provides comprehensive tools for API testing including integration validation and automated documentation generation.
 
 ## Quick Start
 
@@ -48,7 +48,7 @@ open coverage/lcov-report/index.html
 
 #### **Commons Utilities** (`/commons`)
 - **API Client** - Enhanced HTTP client with retry logic and batch operations
-- **Authorization Factory** - Flexible authentication header management
+- **Authorization Factory** - Flexible HTTP header management
 - **Test Data Factory** - Realistic data generation for various domains
 - **Test Runner** - Data-driven test execution framework
 - **URL Builder** - Dynamic URL construction with path parameters
@@ -61,8 +61,6 @@ open coverage/lcov-report/index.html
 - **Feature Flags** - Toggle test suites based on capabilities
 
 #### **AI Testing Agents** (`/agents`)
-- **API Security Auditor** - OWASP Top 10 vulnerability analysis
-- **API Performance Engineer** - Load testing and optimization
 - **API Automation Specialist** - CI/CD integration and framework development
 - **API Integration Tester** - End-to-end workflow validation
 - **API Documentation Analyst** - OpenAPI specification and DX optimization
@@ -71,7 +69,7 @@ open coverage/lcov-report/index.html
 
 #### **Advanced API Client**
 ```typescript
-// Bearer token authentication
+// API client with authentication
 const client = ApiClient.withBearerAuth('https://api.example.com', 'token');
 
 // Batch requests with concurrency control
@@ -144,19 +142,6 @@ describe('Payment API', () => {
 
 ## Test Categories
 
-### 🔒 Security Testing
-- **Authentication/Authorization** - JWT, OAuth 2.0, API key validation
-- **Input Validation** - SQL injection, XSS, LDAP injection prevention
-- **Rate Limiting** - DDoS protection and throttling validation
-- **Data Encryption** - TLS/SSL and data protection verification
-- **OWASP API Top 10** - Comprehensive vulnerability assessment
-
-### ⚡ Performance Testing
-- **Load Testing** - Concurrent user simulation
-- **Stress Testing** - Breaking point identification
-- **Endurance Testing** - Memory leak and degradation detection
-- **Scalability Testing** - Horizontal and vertical scaling validation
-
 ### 🔗 Integration Testing
 - **Third-party APIs** - Payment gateways, email services, SMS providers
 - **Microservices Communication** - Service mesh and discovery validation
@@ -191,7 +176,6 @@ EMAIL_API_KEY=sg.test_key_123
 # Feature Flags
 ENABLE_PAYMENT_TESTS=true
 ENABLE_SECURITY_TESTS=true
-ENABLE_PERFORMANCE_TESTS=false
 
 # Test Execution
 PARALLEL_TESTS=true
@@ -227,43 +211,23 @@ Comprehensive test reporting with:
 
 ### 🎯 Custom Metrics
 ```typescript
-// Performance metrics
+// API response metrics
 const metrics = {
   responseTime: endTime - startTime,
-  throughput: requestCount / duration,
-  errorRate: failures / totalRequests
+  statusCode: response.status,
+  responseSize: JSON.stringify(response.data).length
 };
 
 // Log metrics for analysis
-global.testUtils.attachTestData(metrics, 'Performance Metrics');
-console.log('Performance Metrics:', metrics);
+global.testUtils.attachTestData(metrics, 'API Response Metrics');
+console.log('API Response Metrics:', metrics);
 ```
 
 ## AI-Powered Testing Agents
 
 The framework includes specialized AI agents for comprehensive testing:
 
-### 🛡️ Security Auditor Agent
-```typescript
-Task({
-  subagent_type: "general-purpose",
-  description: "API security assessment",
-  prompt: `[Security Auditor Agent Template]
-  
-  SPECIFIC TASK: Conduct comprehensive security assessment of e-commerce REST API focusing on OWASP API Top 10 vulnerabilities`
-});
-```
 
-### ⚡ Performance Engineer Agent
-```typescript
-Task({
-  subagent_type: "general-purpose", 
-  description: "Load testing strategy",
-  prompt: `[Performance Engineer Agent Template]
-  
-  SPECIFIC TASK: Design load testing strategy for 50K concurrent users during Black Friday sale period`
-});
-```
 
 ### 🤖 Automation Specialist Agent
 ```typescript
@@ -296,17 +260,17 @@ Task({
 - **Test timeout scenarios** and recovery mechanisms
 - **Log detailed error information** for debugging
 
-### ✅ Performance Considerations
+### ✅ Execution Considerations
 - **Implement connection pooling** for database operations
 - **Use parallel execution** where appropriate
 - **Monitor resource usage** during test execution
 - **Set appropriate timeouts** for different test types
 
-### ✅ Security Testing
+### ✅ Data Security
 - **Never commit credentials** to version control
-- **Use secure test environments** that mirror production
-- **Implement proper authentication** for all test scenarios
-- **Validate data encryption** and secure transmission
+- **Use appropriate test environments**
+- **Implement proper authentication** for test scenarios
+- **Handle sensitive test data appropriately**
 
 ## Troubleshooting
 

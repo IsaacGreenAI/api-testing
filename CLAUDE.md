@@ -59,8 +59,6 @@ All commands should be run from `api-automation-tests/` directory.
 - Support for parameterized test scenarios
 
 **AI Testing Agents (`agents/`):**
-- **Security Auditor** - OWASP API Top 10, penetration testing, compliance validation
-- **Performance Engineer** - Load testing, scalability analysis, bottleneck identification
 - **Automation Specialist** - CI/CD integration, framework development, contract testing
 - **Integration Tester** - End-to-end workflows, third-party API validation, microservices testing
 - **Documentation Analyst** - OpenAPI specifications, developer experience optimization

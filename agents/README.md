@@ -4,38 +4,6 @@ This directory contains specialized agent templates for use with Claude Code's T
 
 ## 📁 Available Agents
 
-### 🔒 API Security Auditor
-**File:** `api-security-auditor.md`  
-**Specialization:** REST API security analysis, vulnerability assessment, secure development practices  
-**Key Focus:** OWASP API Top 10, authentication/authorization, penetration testing, compliance
-
-**Quick Usage:**
-```typescript
-Task({
-  subagent_type: "general-purpose",
-  description: "API security vulnerability assessment", 
-  prompt: `[See api-security-auditor.md template]
-  
-SPECIFIC TASK: Conduct comprehensive security assessment of e-commerce REST API`
-})
-```
-
-### ⚡ API Performance Engineer
-**File:** `api-performance-engineer.md`  
-**Specialization:** Load testing, scalability optimization, performance monitoring  
-**Key Focus:** JMeter/K6 testing, bottleneck analysis, infrastructure scaling, APM integration
-
-**Quick Usage:**
-```typescript
-Task({
-  subagent_type: "general-purpose",
-  description: "API performance optimization", 
-  prompt: `[See api-performance-engineer.md template]
-  
-SPECIFIC TASK: Design load testing strategy for 50K concurrent users during peak traffic`
-})
-```
-
 ### 🤖 API Automation Specialist
 **File:** `api-automation-specialist.md`  
 **Specialization:** Test automation frameworks, CI/CD integration, automated validation  
@@ -132,7 +100,7 @@ Each agent includes:
 `[domain]-[specialization]-[optional-modifier].md`
 
 Examples:
-- `security-penetration-tester.md`
+- `data-validation-specialist.md`
 - `finance-investment-analyst.md`
 - `healthcare-clinical-researcher.md`
 - `legal-contract-analyzer.md`
@@ -163,12 +131,12 @@ Add new agents to this README with:
 - **Healthcare API Compliance** - FHIR standards, HIPAA compliance, medical data validation
 - **Financial API Auditor** - PCI DSS compliance, payment processing, fraud prevention
 - **IoT API Specialist** - Device communication, telemetry validation, edge computing
-- **Gaming API Performance** - Real-time multiplayer, leaderboards, matchmaking systems
+- **Gaming API Specialist** - Real-time multiplayer, leaderboards, matchmaking systems
 
 ### Infrastructure and DevOps
 - **Kubernetes API Validator** - Custom resource definitions, operator testing
 - **Cloud API Integration** - Multi-cloud strategies, serverless API testing
-- **Database API Optimizer** - Connection pooling, query performance, caching strategies
+- **Database API Specialist** - Connection pooling, query optimization, caching strategies
 - **Monitoring API Specialist** - Metrics collection, alerting integration, observability
 
 ## 🔄 Agent Versioning
@@ -204,15 +172,15 @@ Update version info in agent files and this index when making significant change
 
 ### Comprehensive API Quality Assessment
 Combine multiple agents for complete API evaluation:
-1. **Security Auditor** → Identify vulnerabilities and compliance gaps
-2. **Performance Engineer** → Optimize for scale and efficiency  
-3. **Documentation Analyst** → Ensure developer experience excellence
+1. **Documentation Analyst** → Ensure developer experience excellence
+2. **Integration Tester** → Validate end-to-end workflows  
+3. **Automation Specialist** → Streamline testing processes
 4. **Integration Tester** → Validate end-to-end workflows
 5. **Automation Specialist** → Implement continuous validation
 
 ### API Development Lifecycle Integration
-- **Design Phase:** Documentation Analyst + Security Auditor
-- **Development Phase:** Automation Specialist + Performance Engineer
-- **Testing Phase:** Integration Tester + Security Auditor
-- **Production Phase:** Performance Engineer + Automation Specialist
+- **Design Phase:** Documentation Analyst + Integration Tester
+- **Development Phase:** Automation Specialist + Documentation Analyst
+- **Testing Phase:** Integration Tester + Automation Specialist
+- **Production Phase:** Integration Tester + Automation Specialist
 - **Maintenance Phase:** Documentation Analyst + All specialists for ongoing optimization
