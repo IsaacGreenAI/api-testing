@@ -52,6 +52,22 @@ SPECIFIC TASK: Analyze and improve developer portal documentation for public API
 })
 ```
 
+### 💻 C# Microservices Expert
+**File:** `csharp-microservices-expert.md`  
+**Specialization:** .NET ecosystem development, microservices architecture, distributed systems  
+**Key Focus:** ASP.NET Core, Entity Framework, Azure/AWS integration, enterprise patterns
+
+**Quick Usage:**
+```typescript
+Task({
+  subagent_type: "general-purpose",
+  description: "C# microservices architecture", 
+  prompt: `[See csharp-microservices-expert.md template]
+  
+SPECIFIC TASK: Design enterprise API architecture using ASP.NET Core 8 with microservices patterns`
+})
+```
+
 ---
 
 ## 🚀 How to Use Agents

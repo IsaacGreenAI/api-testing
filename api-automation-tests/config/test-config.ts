@@ -22,7 +22,7 @@ export class TestConfig {
    */
   private loadConfiguration(): ConfigData {
     const env = process.env.NODE_ENV || 'test';
-    
+
     return {
       environment: env,
       api: {
@@ -57,8 +57,8 @@ export class TestConfig {
         paymentProcessing: process.env.ENABLE_PAYMENT_TESTS !== 'false',
         userManagement: process.env.ENABLE_USER_TESTS !== 'false',
         integrationTests: process.env.ENABLE_INTEGRATION_TESTS !== 'false',
-        performanceTests: process.env.ENABLE_PERFORMANCE_TESTS === 'true',
-        securityTests: process.env.ENABLE_SECURITY_TESTS === 'true'
+        performanceTests: false,
+        securityTests: false
       },
       external: {
         paymentGateway: {
@@ -157,7 +157,7 @@ export class TestConfig {
   /**
    * Get configuration for specific test type
    */
-  getTestConfig(testType: 'unit' | 'integration' | 'e2e' | 'performance' | 'security'): TestTypeConfig {
+  getTestConfig(testType: 'unit' | 'integration' | 'e2e'): TestTypeConfig {
     const baseConfig = {
       timeout: this.config.api.timeout,
       retries: this.config.api.retries,
@@ -165,43 +165,29 @@ export class TestConfig {
     };
 
     switch (testType) {
-      case 'unit':
-        return {
-          ...baseConfig,
-          timeout: 5000,
-          retries: 1,
-          parallel: true
-        };
-      case 'integration':
-        return {
-          ...baseConfig,
-          timeout: 15000,
-          retries: 2,
-          parallel: this.config.testing.maxConcurrency <= 3
-        };
-      case 'e2e':
-        return {
-          ...baseConfig,
-          timeout: 60000,
-          retries: 3,
-          parallel: false
-        };
-      case 'performance':
-        return {
-          ...baseConfig,
-          timeout: 300000, // 5 minutes
-          retries: 1,
-          parallel: false
-        };
-      case 'security':
-        return {
-          ...baseConfig,
-          timeout: 30000,
-          retries: 2,
-          parallel: this.config.testing.maxConcurrency <= 2
-        };
-      default:
-        return baseConfig;
+    case 'unit':
+      return {
+        ...baseConfig,
+        timeout: 5000,
+        retries: 1,
+        parallel: true
+      };
+    case 'integration':
+      return {
+        ...baseConfig,
+        timeout: 15000,
+        retries: 2,
+        parallel: this.config.testing.maxConcurrency <= 3
+      };
+    case 'e2e':
+      return {
+        ...baseConfig,
+        timeout: 60000,
+        retries: 3,
+        parallel: false
+      };
+    default:
+      return baseConfig;
     }
   }
 

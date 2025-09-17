@@ -2,35 +2,33 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "Debug Jest Tests",
+      "name": "Debug Jest Tests - Local",
       "type": "node",
       "request": "launch",
-      "program": "${workspaceFolder}/node_modules/jest/.bin/jest.js",
+      "program": "${workspaceFolder}/api-automation-tests/node_modules/jest/.bin/jest.js",
       "args": [
         "--runInBand",
         "<SPEC FILE NAME HERE>"
-
       ],
       "console": "integratedTerminal",
       "internalConsoleOptions": "neverOpen",
-      "cwd": "${workspaceFolder}/automation-api-tests",
+      "cwd": "${workspaceFolder}/api-automation-tests",
       "env": {
         "TEST_ENV": "local"
       }
     },
     {
-      "name": "Debug Jest Tests",
+      "name": "Debug Jest Tests - Dev",
       "type": "node",
       "request": "launch",
-      "program": "${workspaceFolder}/node_modules/jest/.bin/jest.js",
+      "program": "${workspaceFolder}/api-automation-tests/node_modules/jest/.bin/jest.js",
       "args": [
         "--runInBand",
         "<SPEC FILE NAME HERE>"
-
       ],
       "console": "integratedTerminal",
       "internalConsoleOptions": "neverOpen",
-      "cwd": "${workspaceFolder}/automation-api-tests",
+      "cwd": "${workspaceFolder}/api-automation-tests",
       "env": {
         "TEST_ENV": "dev"
       }
