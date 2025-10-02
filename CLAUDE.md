@@ -22,8 +22,6 @@ All commands should be run from `api-automation-tests/` directory.
 **Project Structure:**
 - `commons/` - Production-ready utility functions and classes
   - **Enhanced API Client** - HTTP client with batch operations, retry logic, and health checks
-  - **Test Data Factory** - Realistic data generation for users, payments, products, orders
-  - **Test Runner** - Data-driven testing framework with multiple data providers
   - **Authorization Factory** - Flexible authentication (Basic/Bearer/Custom/API Key)
   - **Configuration Management** - Environment-specific settings and feature flags
   - URL builder, retry mechanism, date formatting, and utility functions
@@ -40,23 +38,11 @@ All commands should be run from `api-automation-tests/` directory.
 - Built-in retry logic and health check capabilities
 - Support for Bearer, Basic Auth, and API Key authentication
 
-**Test Data Factory (`commons/test-data-factory.ts`):**
-- Generates realistic test data for users, payments, products, orders
-- Configurable data generation with override capabilities
-- Consistent, predictable data for test isolation
-- Support for various business domains and use cases
-
 **Configuration Management (`config/test-config.ts`):**
 - Environment-specific configuration with validation
 - Feature flags for conditional test execution
 - Secure credential management
 - Support for multiple environments (dev, staging, prod)
-
-**Data-Driven Testing (`commons/test-runner.ts`):**
-- Execute tests with multiple data providers (factory, file, API, database)
-- Batch test execution with configurable concurrency
-- Test result aggregation and reporting
-- Support for parameterized test scenarios
 
 **AI Testing Agents (`agents/`):**
 - **Automation Specialist** - CI/CD integration, framework development, contract testing

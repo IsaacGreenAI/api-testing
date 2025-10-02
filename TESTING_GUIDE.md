@@ -49,8 +49,6 @@ open coverage/lcov-report/index.html
 #### **Commons Utilities** (`/commons`)
 - **API Client** - Enhanced HTTP client with retry logic and batch operations
 - **Authorization Factory** - Flexible HTTP header management
-- **Test Data Factory** - Realistic data generation for various domains
-- **Test Runner** - Data-driven test execution framework
 - **URL Builder** - Dynamic URL construction with path parameters
 - **Retry Mechanism** - Configurable retry logic for resilient testing
 - **Date Formatter** - Timezone-aware date formatting utilities
