@@ -1,23 +1,35 @@
 # api-testing
 🚀 Professional API Testing Framework
 
-A production-ready API testing framework featuring **AI-powered testing agents**, **comprehensive automation**, and **advanced reporting** with **Jest coverage reporting**.
+A modern API testing framework showcasing multiple testing frameworks (**Vitest**, **Playwright**, **Mocha/Chai**) with **SOLID principles**, **ESM modules**, and **production-ready utilities**.
 
 ## ✨ Key Features
 
-- **🤖 AI Testing Agents** - Specialized agents for automation, integration, and documentation
-- **📊 Jest Coverage Reports** - Comprehensive test coverage and execution reporting  
-- **🔗 Integration Testing** - Third-party API validation and microservices communication testing
-- **📋 Data-Driven Testing** - Realistic test data generation and parameterized test execution
-- **🛠️ Production-Ready Utilities** - Enhanced HTTP client, retry mechanisms, and configuration management
+- **🎯 Multiple Testing Frameworks** - Vitest, Playwright, and Mocha/Chai implementations
+- **🏗️ SOLID Principles** - Interface-based HTTP client with Axios and Fetch implementations
+- **📦 ES Modules (ESM)** - Modern JavaScript with full ESM support
+- **🧪 Comprehensive Test Coverage** - 69+ passing unit and integration tests
+- **🛠️ Production-Ready Utilities** - Shared commons library with HTTP clients, auth factory, and utilities
+- **🌌 Universe Service API** - RESTful microservice for testing (ASP.NET Core + PostgreSQL)
 
 ## 🚀 Quick Start
 
+### Run Vitest Tests
+
 ```bash
-cd api-automation-tests
+cd vitest-api-tests
 npm install
 npm test
-open coverage/lcov-report/index.html
+npm run test:coverage  # Generate coverage report
 ```
 
-See **[TESTING_GUIDE.md](TESTING_GUIDE.md)** for comprehensive documentation.
+### Start Universe Service API
+
+```bash
+cd universe-service
+docker-compose up --build
+# API available at http://localhost:8080
+# Swagger UI at http://localhost:8080/swagger
+```
+
+See **[vitest-api-tests/README.md](vitest-api-tests/README.md)** and **[universe-service/README.md](universe-service/README.md)** for detailed documentation.

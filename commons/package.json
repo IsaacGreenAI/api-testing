@@ -1,0 +1,15 @@
+{
+  "name": "@api-testing/commons",
+  "version": "1.0.0",
+  "description": "Shared utilities and HTTP clients for API testing",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage"
+  },
+  "keywords": ["api", "testing", "utilities", "http-client"],
+  "author": "JRIG",
+  "license": "MIT"
+}

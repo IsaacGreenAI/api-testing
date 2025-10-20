@@ -1,0 +1,31 @@
+{
+  "compilerOptions": {
+    "target": "ES2023",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "esModuleInterop": true,
+    "allowJs": true,
+    "checkJs": false,
+    "strict": false,
+    "strictFunctionTypes": true,
+    "strictBindCallApply": true,
+    "noImplicitAny": false,
+    "noImplicitThis": true,
+    "strictNullChecks": false,
+    "strictPropertyInitialization": false,
+    "alwaysStrict": true,
+    "skipLibCheck": true,
+    "resolveJsonModule": true,
+    "baseUrl": "..",
+    "paths": {
+      "@commons": ["commons/index.ts"],
+      "@commons/*": ["commons/*"]
+    },
+    "types": ["vitest/globals", "node"]
+  },
+  "exclude": ["./coverage", "./node_modules"],
+  "include": [
+    "./specs/**/*.ts",
+    "../commons/**/*.ts",
+  ]
+}
