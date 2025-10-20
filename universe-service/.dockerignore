@@ -1,0 +1,49 @@
+# Git
+.git
+.gitignore
+.gitattributes
+
+# Build results
+**/bin/
+**/obj/
+**/out/
+
+# IDE
+.vs/
+.vscode/
+.idea/
+*.user
+*.userosscache
+*.suo
+
+# Environment
+.env
+.env.*
+!.env.example
+
+# Documentation
+*.md
+LICENSE
+
+# Tests
+**/*Tests/
+**/*.Tests/
+
+# Docker
+Dockerfile*
+docker-compose*
+.dockerignore
+
+# NuGet
+*.nupkg
+*.snupkg
+packages/
+
+# Database
+*.db
+*.db-shm
+*.db-wal
+
+# Logs
+logs/
+*.log
