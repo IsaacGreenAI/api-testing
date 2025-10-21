@@ -9,11 +9,11 @@
 .vs/
 .idea/
 
-# Node modules
-node_modules/
+# Node modules (at any level)
+**/node_modules/
 
-# Test coverage
-coverage/
+# Test coverage (at any level)
+**/coverage/
 
 # Environment files
 .env

@@ -5,12 +5,12 @@ A modern API testing framework showcasing multiple testing frameworks (**Vitest*
 
 ## ✨ Key Features
 
-- **🎯 Multiple Testing Frameworks** - Vitest, Playwright, and Mocha/Chai implementations
+- **🎯 Multiple Testing Frameworks** - Vitest, Playwright (WIP), and Mocha/Chai (WIP) implementations
 - **🏗️ SOLID Principles** - Interface-based HTTP client with Axios and Fetch implementations
 - **📦 ES Modules (ESM)** - Modern JavaScript with full ESM support
-- **🧪 Comprehensive Test Coverage** - 90+ passing unit and integration tests
+- **🧪 Comprehensive Test Coverage** - vitest-api-tests project demonstrating integration tests coverage (31 integration tests)
 - **🛠️ Production-Ready Utilities** - Standalone commons library with HTTP clients, auth factory, and utilities (59 unit tests)
-- **🌌 Universe Service API** - RESTful microservice for testing (ASP.NET Core + PostgreSQL)
+- **🌌 Universe Service API** - RESTful microservice for testing (ASP.NET Core + PostgreSQL) inclusive of unit test coverage (86 unit tests)
 
 ## 🚀 Quick Start
 
