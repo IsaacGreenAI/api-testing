@@ -1,0 +1,32 @@
+{
+  "name": "vitest-api-tests",
+  "version": "1.0.0",
+  "description": "Vitest API integration tests for the Universe Service",
+  "type": "module",
+  "author": "",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/IsaacGreenAI/api-testing"
+  },
+  "scripts": {
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:ui": "vitest --ui",
+    "test:coverage": "vitest run --coverage",
+    "lint": "eslint ./specs/**/*.ts",
+    "lint:fix": "eslint ./specs/**/*.ts --fix"
+  },
+  "dependencies": {
+    "axios": "^1.12.2"
+  },
+  "devDependencies": {
+    "@types/node": "^24.9.1",
+    "@vitest/ui": "^3.2.4",
+    "eslint": "^9.38.0",
+    "typescript": "5.9.3",
+    "typescript-eslint": "^8.46.2",
+    "vite": "^7.1.11",
+    "vitest": "^3.2.4"
+  }
+}

@@ -1,0 +1,25 @@
+# Environment variables
+.env
+
+# Build results
+bin/
+obj/
+
+# User-specific files
+*.user
+*.userosscache
+*.suo
+
+# Visual Studio
+.vs/
+
+# Rider
+.idea/
+
+# Database files
+*.db
+*.db-shm
+*.db-wal
+
+# Migrations (if you want to exclude them)
+# Migrations/
