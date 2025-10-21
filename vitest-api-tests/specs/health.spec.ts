@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeAll } from 'vitest';
-import { AxiosHttpClient, TResponse } from '@commons';
+import { AxiosHttpClient, TResponse } from '../../commons';
 
 const BASE_URL = process.env.UNIVERSE_API_URL || 'http://localhost:8080';
 
@@ -21,7 +21,7 @@ describe('Health Check Endpoint', () => {
 
     it('should respond quickly (performance check)', async () => {
       const startTime = Date.now();
-      const response: TResponse<any> = await httpClient.get(`${BASE_URL}/health`);
+      const response: TResponse<object> = await httpClient.get(`${BASE_URL}/health`);
       const endTime = Date.now();
       const responseTime = endTime - startTime;
 
@@ -30,7 +30,7 @@ describe('Health Check Endpoint', () => {
     });
 
     it('should have correct content-type header', async () => {
-      const response: TResponse<any> = await httpClient.get(`${BASE_URL}/health`);
+      const response: TResponse<object> = await httpClient.get(`${BASE_URL}/health`);
 
       expect(response.isSuccess).toBe(true);
       expect(response.headers).toBeDefined();

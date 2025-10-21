@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeAll } from 'vitest';
-import { AxiosHttpClient, TResponse } from '@commons';
+import { AxiosHttpClient, TResponse } from '../../commons';
 
 const BASE_URL = process.env.UNIVERSE_API_URL || 'http://localhost:8080';
 
@@ -16,7 +16,6 @@ interface Planet {
 
 describe('Planets API Endpoints', () => {
   let httpClient: AxiosHttpClient;
-  let createdPlanetId: number;
 
   beforeAll(() => {
     httpClient = new AxiosHttpClient();
@@ -51,7 +50,7 @@ describe('Planets API Endpoints', () => {
   describe('POST /api/planets', () => {
     it('should create a new planet', async () => {
       const newPlanet: Planet = {
-        name: 'Kepler-452b',
+        name: `Kepler-452b ${Date.now()}`,
         type: 'Exoplanet',
         mass: 5.0,
         radius: 6371,
@@ -65,7 +64,6 @@ describe('Planets API Endpoints', () => {
       expect(response.isSuccess).toBe(true);
       expect(response.status).toBe(201);
       expect(response.data).toMatchObject({
-        name: 'Kepler-452b',
         type: 'Exoplanet',
         mass: 5.0,
         radius: 6371,
@@ -73,28 +71,26 @@ describe('Planets API Endpoints', () => {
         galaxyId: 1,
         hasAtmosphere: true
       });
+      expect(response.data!.name).toContain('Kepler-452b');
       expect(response.data!.id).toBeDefined();
-
-      // Save ID for subsequent tests
-      createdPlanetId = response.data!.id!;
     });
 
     it('should reject planet creation with invalid data', async () => {
       const invalidPlanet = {
-        name: '', // Empty name should fail validation
-        type: 'InvalidType',
-        mass: -1,
-        radius: -1,
-        distanceFromStar: -100, // Negative distance
-        galaxyId: 999, // Non-existent galaxy
+        name: '', // Empty name - violates MinLength validation
+        type: '', // Empty type - violates MinLength validation
+        mass: -1, // Negative mass - violates Range validation
+        radius: -1, // Negative radius - violates Range validation
+        distanceFromStar: -100, // Negative distance - violates Range validation
+        galaxyId: 999, // Non-existent galaxy (won't be validated at model level)
         hasAtmosphere: true
       };
 
-      const response: TResponse<any> = await httpClient.post(`${BASE_URL}/api/planets`, invalidPlanet);
+      const response: TResponse<Planet> = await httpClient.post(`${BASE_URL}/api/planets`, invalidPlanet);
 
-      // API may return 400 (bad request) or 201 (created) depending on validation
-      expect(response.status).toBeGreaterThanOrEqual(200);
-      expect(response.status).toBeLessThan(600);
+      // API should return 400 Bad Request for validation errors
+      expect(response.isClientError).toBe(true);
+      expect(response.status).toBe(400);
     });
   });
 
@@ -109,7 +105,7 @@ describe('Planets API Endpoints', () => {
     });
 
     it('should return 404 for non-existent planet', async () => {
-      const response: TResponse<any> = await httpClient.get(`${BASE_URL}/api/planets/999999`);
+      const response: TResponse<Planet[]> = await httpClient.get(`${BASE_URL}/api/planets/999999`);
 
       expect(response.isClientError).toBe(true);
       expect(response.status).toBe(404);
@@ -163,8 +159,25 @@ describe('Planets API Endpoints', () => {
 
   describe('PUT /api/planets/{id}', () => {
     it('should update an existing planet', async () => {
+      // Create a planet first
+      const newPlanet: Planet = {
+        name: `Kepler-452b For Update ${Date.now()}`,
+        type: 'Exoplanet',
+        mass: 5.0,
+        radius: 6371,
+        distanceFromStar: 1400,
+        galaxyId: 1,
+        hasAtmosphere: true
+      };
+
+      const createResponse: TResponse<Planet> = await httpClient.post<Planet>(`${BASE_URL}/api/planets`, newPlanet);
+      expect(createResponse.status).toBe(201);
+      const planetId = createResponse.data!.id!;
+
+      // Now update it
       const updatedPlanet: Planet = {
-        name: 'Kepler-452b Updated',
+        id: planetId,
+        name: `Kepler-452b Updated ${Date.now()}`,
         type: 'Super-Earth',
         mass: 5.5,
         radius: 6500,
@@ -174,17 +187,16 @@ describe('Planets API Endpoints', () => {
       };
 
       const response: TResponse<Planet> = await httpClient.put<Planet>(
-        `${BASE_URL}/api/planets/${createdPlanetId}`,
+        `${BASE_URL}/api/planets/${planetId}`,
         updatedPlanet
       );
 
-      // PUT may return 200 or 204
-      expect(response.status).toBeGreaterThanOrEqual(200);
-      expect(response.status).toBeLessThan(300);
+      expect(response.status).toBe(200);
     });
 
     it('should return 404 when updating non-existent planet', async () => {
       const updatedPlanet: Planet = {
+        id: 999999,
         name: 'Non-existent',
         type: 'Unknown',
         mass: 0,
@@ -194,34 +206,46 @@ describe('Planets API Endpoints', () => {
         hasAtmosphere: false
       };
 
-      const response: TResponse<any> = await httpClient.put(
+      const response: TResponse<Planet> = await httpClient.put(
         `${BASE_URL}/api/planets/999999`,
         updatedPlanet
       );
 
       expect(response.isClientError).toBe(true);
-      // API may return 404 or 400
-      expect(response.status).toBeGreaterThanOrEqual(400);
-      expect(response.status).toBeLessThan(500);
+      expect(response.status).toBe(404);
     });
   });
 
   describe('DELETE /api/planets/{id}', () => {
     it('should delete a planet', async () => {
-      const response: TResponse<void> = await httpClient.delete(`${BASE_URL}/api/planets/${createdPlanetId}`);
+      // Create a planet first
+      const newPlanet: Planet = {
+        name: `Kepler-452b For Delete ${Date.now()}`,
+        type: 'Exoplanet',
+        mass: 5.0,
+        radius: 6371,
+        distanceFromStar: 1400,
+        galaxyId: 1,
+        hasAtmosphere: true
+      };
 
-      // DELETE may return 204 or 200
-      expect(response.status).toBeGreaterThanOrEqual(200);
-      expect(response.status).toBeLessThan(300);
+      const createResponse: TResponse<Planet> = await httpClient.post<Planet>(`${BASE_URL}/api/planets`, newPlanet);
+      expect(createResponse.status).toBe(201);
+      const planetId = createResponse.data!.id!;
+
+      // Now delete it
+      const response: TResponse<void> = await httpClient.delete(`${BASE_URL}/api/planets/${planetId}`);
+
+      expect(response.status).toBe(204);
 
       // Verify planet was deleted
-      const getResponse: TResponse<any> = await httpClient.get(`${BASE_URL}/api/planets/${createdPlanetId}`);
+      const getResponse: TResponse<Planet[]> = await httpClient.get(`${BASE_URL}/api/planets/${planetId}`);
       expect(getResponse.isClientError).toBe(true);
       expect(getResponse.status).toBe(404);
     });
 
     it('should return 404 when deleting non-existent planet', async () => {
-      const response: TResponse<any> = await httpClient.delete(`${BASE_URL}/api/planets/999999`);
+      const response: TResponse<void> = await httpClient.delete(`${BASE_URL}/api/planets/999999`);
 
       expect(response.isClientError).toBe(true);
       expect(response.status).toBe(404);

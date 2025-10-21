@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeAll } from 'vitest';
-import { FetchHttpClient, TResponse } from '@commons';
+import { FetchHttpClient, TResponse } from '../../commons';
 
 const BASE_URL = process.env.UNIVERSE_API_URL || 'http://localhost:8080';
 
@@ -7,13 +7,14 @@ interface Galaxy {
   id?: number;
   name: string;
   type: string;
+  starCount: number;
   distanceFromEarth: number;
+  diameter: number;
   hasBlackHole: boolean;
 }
 
 describe('Galaxies API Endpoints', () => {
   let httpClient: FetchHttpClient;
-  let createdGalaxyId: number;
 
   beforeAll(() => {
     httpClient = new FetchHttpClient();
@@ -37,7 +38,9 @@ describe('Galaxies API Endpoints', () => {
       expect(galaxy).toHaveProperty('id');
       expect(galaxy).toHaveProperty('name');
       expect(galaxy).toHaveProperty('type');
+      expect(galaxy).toHaveProperty('starCount');
       expect(galaxy).toHaveProperty('distanceFromEarth');
+      expect(galaxy).toHaveProperty('diameter');
       expect(galaxy).toHaveProperty('hasBlackHole');
     });
   });
@@ -45,9 +48,11 @@ describe('Galaxies API Endpoints', () => {
   describe('POST /api/galaxies', () => {
     it('should create a new galaxy', async () => {
       const newGalaxy: Galaxy = {
-        name: 'Messier 87',
+        name: `Messier 87 Test ${Date.now()}`,
         type: 'Elliptical',
+        starCount: 1000,
         distanceFromEarth: 53500000,
+        diameter: 120000,
         hasBlackHole: true
       };
 
@@ -56,30 +61,31 @@ describe('Galaxies API Endpoints', () => {
       expect(response.isSuccess).toBe(true);
       expect(response.status).toBe(201);
       expect(response.data).toMatchObject({
-        name: 'Messier 87',
         type: 'Elliptical',
+        starCount: 1000,
         distanceFromEarth: 53500000,
+        diameter: 120000,
         hasBlackHole: true
       });
+      expect(response.data!.name).toContain('Messier 87 Test');
       expect(response.data!.id).toBeDefined();
-
-      // Save ID for subsequent tests
-      createdGalaxyId = response.data!.id!;
     });
 
     it('should reject galaxy creation with invalid data', async () => {
       const invalidGalaxy = {
-        name: '', // Empty name
-        type: 'InvalidType',
-        distanceFromEarth: -1000, // Negative distance
+        name: '', // Empty name - violates MinLength validation
+        type: '', // Empty type - violates MinLength validation
+        distanceFromEarth: -1000, // Negative distance - violates Range validation
+        starCount: -100, // Negative star count - violates Range validation
+        diameter: -50, // Negative diameter - violates Range validation
         hasBlackHole: true
       };
 
-      const response: TResponse<any> = await httpClient.post(`${BASE_URL}/api/galaxies`, invalidGalaxy);
+      const response: TResponse<Galaxy> = await httpClient.post(`${BASE_URL}/api/galaxies`, invalidGalaxy);
 
-      // API may return 400 (bad request) or 201 (created) depending on validation
-      expect(response.status).toBeGreaterThanOrEqual(200);
-      expect(response.status).toBeLessThan(600);
+      // API should return 400 Bad Request for validation errors
+      expect(response.isClientError).toBe(true);
+      expect(response.status).toBe(400);
     });
   });
 
@@ -94,7 +100,7 @@ describe('Galaxies API Endpoints', () => {
     });
 
     it('should return 404 for non-existent galaxy', async () => {
-      const response: TResponse<any> = await httpClient.get(`${BASE_URL}/api/galaxies/999999`);
+      const response: TResponse<Galaxy[]> = await httpClient.get(`${BASE_URL}/api/galaxies/999999`);
 
       expect(response.isClientError).toBe(true);
       expect(response.status).toBe(404);
@@ -175,58 +181,90 @@ describe('Galaxies API Endpoints', () => {
 
   describe('PUT /api/galaxies/{id}', () => {
     it('should update an existing galaxy', async () => {
+      // Create a galaxy first
+      const newGalaxy: Galaxy = {
+        name: `Messier 87 For Update ${Date.now()}`,
+        type: 'Elliptical',
+        starCount: 1000,
+        distanceFromEarth: 53500000,
+        diameter: 120000,
+        hasBlackHole: true
+      };
+
+      const createResponse: TResponse<Galaxy> = await httpClient.post<Galaxy>(`${BASE_URL}/api/galaxies`, newGalaxy);
+      expect(createResponse.status).toBe(201);
+      const galaxyId = createResponse.data!.id!;
+
+      // Now update it
       const updatedGalaxy: Galaxy = {
-        name: 'Messier 87 Updated',
+        id: galaxyId,
+        name: `Messier 87 Updated ${Date.now()}`,
         type: 'Giant Elliptical',
+        starCount: 1200,
         distanceFromEarth: 53600000,
+        diameter: 130000,
         hasBlackHole: true
       };
 
       const response: TResponse<Galaxy> = await httpClient.put<Galaxy>(
-        `${BASE_URL}/api/galaxies/${createdGalaxyId}`,
+        `${BASE_URL}/api/galaxies/${galaxyId}`,
         updatedGalaxy
       );
 
-      // PUT may return 200 or 204
-      expect(response.status).toBeGreaterThanOrEqual(200);
-      expect(response.status).toBeLessThan(300);
+      expect(response.status).toBe(200);
     });
 
     it('should return 404 when updating non-existent galaxy', async () => {
       const updatedGalaxy: Galaxy = {
+        id: 999999,
         name: 'Non-existent',
         type: 'Unknown',
+        starCount: 0,
         distanceFromEarth: 0,
+        diameter: 0,
         hasBlackHole: false
       };
 
-      const response: TResponse<any> = await httpClient.put(
+      const response: TResponse<Galaxy> = await httpClient.put(
         `${BASE_URL}/api/galaxies/999999`,
         updatedGalaxy
       );
 
       expect(response.isClientError).toBe(true);
-      // API may return 404 or 400
-      expect(response.status).toBeGreaterThanOrEqual(400);
-      expect(response.status).toBeLessThan(500);
+      expect(response.status).toBe(404);
     });
   });
 
   describe('DELETE /api/galaxies/{id}', () => {
     it('should delete a galaxy', async () => {
-      const response: TResponse<void> = await httpClient.delete(`${BASE_URL}/api/galaxies/${createdGalaxyId}`);
+      // Create a galaxy first
+      const newGalaxy: Galaxy = {
+        name: `Messier 87 For Delete ${Date.now()}`,
+        type: 'Elliptical',
+        starCount: 1000,
+        distanceFromEarth: 53500000,
+        diameter: 120000,
+        hasBlackHole: true
+      };
+
+      const createResponse: TResponse<Galaxy> = await httpClient.post<Galaxy>(`${BASE_URL}/api/galaxies`, newGalaxy);
+      expect(createResponse.status).toBe(201);
+      const galaxyId = createResponse.data!.id!;
+
+      // Now delete it
+      const response: TResponse<void> = await httpClient.delete(`${BASE_URL}/api/galaxies/${galaxyId}`);
 
       expect(response.isSuccess).toBe(true);
       expect(response.status).toBe(204);
 
       // Verify galaxy was deleted
-      const getResponse: TResponse<any> = await httpClient.get(`${BASE_URL}/api/galaxies/${createdGalaxyId}`);
+      const getResponse: TResponse<Galaxy[]> = await httpClient.get(`${BASE_URL}/api/galaxies/${galaxyId}`);
       expect(getResponse.isClientError).toBe(true);
       expect(getResponse.status).toBe(404);
     });
 
     it('should return 404 when deleting non-existent galaxy', async () => {
-      const response: TResponse<any> = await httpClient.delete(`${BASE_URL}/api/galaxies/999999`);
+      const response: TResponse<void> = await httpClient.delete(`${BASE_URL}/api/galaxies/999999`);
 
       expect(response.isClientError).toBe(true);
       expect(response.status).toBe(404);

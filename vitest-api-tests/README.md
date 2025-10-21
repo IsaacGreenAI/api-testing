@@ -48,18 +48,6 @@ npm run test:coverage
 
 ## Test Organization
 
-### Unit Tests (commons/__tests__/)
-
-Located in `../commons/__tests__/`:
-- `AxiosHttpClient.test.ts` - Axios HTTP client tests
-- `FetchHttpClient.test.ts` - Fetch HTTP client tests
-- `authorization-headers-factory.test.ts` - Auth header builder tests
-- `format-date.test.ts` - Date formatting utility tests
-- `regex-matches.test.ts` - Regex pattern tests
-- `retry.test.ts` - Retry mechanism tests
-- `sleep.test.ts` - Sleep utility tests
-- `url-builder.test.ts` - URL builder tests
-
 ### Integration Tests (specs/)
 
 API integration tests for Universe Service:
@@ -71,8 +59,18 @@ API integration tests for Universe Service:
 
 ```bash
 # Start Universe Service
-cd ../universe-service
+cd ../UniverseService
 docker-compose up --build
+```
+
+### Unit Tests
+
+Commons library has its own test suite. See **[../commons/README.md](../commons/README.md)** for details.
+
+```bash
+# Run commons unit tests
+cd ../commons
+npm test
 ```
 
 ## HTTP Client Architecture (SOLID)
@@ -156,28 +154,22 @@ ESLint 9 with flat config (`eslint.config.mjs`):
 
 ## Test Results
 
-**Expected Output** (all tests passing):
+**Expected Output** (integration tests only):
 ```
 ✓ specs/health.spec.ts (3 tests)
 ✓ specs/planets.spec.ts (14 tests)
 ✓ specs/galaxies.spec.ts (14 tests)
-✓ ../commons/__tests__/authorization-headers-factory.test.ts (7 tests)
-✓ ../commons/__tests__/url-builder.test.ts (6 tests)
-✓ ../commons/__tests__/regex-matches.test.ts (7 tests)
-✓ ../commons/__tests__/retry.test.ts (3 tests)
-✓ ../commons/__tests__/sleep.test.ts (1 test)
-✓ ../commons/__tests__/format-date.test.ts (26 tests)
-✓ ../commons/__tests__/FetchHttpClient.test.ts (10 tests)
-✓ ../commons/__tests__/AxiosHttpClient.test.ts (8 tests)
 
-Test Files  11 passed (11)
-Tests       99 passed (99)
+Test Files  3 passed (3)
+Tests      31 passed (31)
 ```
+
+**Note**: Commons unit tests (59 tests) are now run separately in the `../commons` directory.
 
 ## Troubleshooting
 
 **Integration tests failing?**
-- Ensure Universe Service is running: `cd ../universe-service && docker-compose up`
+- Ensure Universe Service is running: `cd ../UniverseService && docker-compose up`
 - Check API is accessible: `curl http://localhost:8080/health`
 
 **Import errors?**

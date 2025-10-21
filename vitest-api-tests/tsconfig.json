@@ -16,10 +16,10 @@
     "alwaysStrict": true,
     "skipLibCheck": true,
     "resolveJsonModule": true,
-    "baseUrl": "..",
+    "baseUrl": "./", // Adjusted to align with Vitest's resolve.alias
     "paths": {
-      "@commons": ["commons/index.ts"],
-      "@commons/*": ["commons/*"]
+      "@commons": ["../commons/index.ts"],
+      "@commons/*": ["../commons/*"]
     },
     "types": ["vitest/globals", "node"]
   },
