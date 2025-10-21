@@ -1,0 +1,41 @@
+# .NET build outputs
+**/bin/
+**/obj/
+*.user
+*.userosscache
+*.suo
+
+# Visual Studio / Rider
+.vs/
+.idea/
+
+# Node modules
+node_modules/
+
+# Test coverage
+coverage/
+
+# Environment files
+.env
+.env.local
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Database files
+*.db
+*.db-shm
+*.db-wal
+
+# Vitest
+vitest.config.ts.timestamp-*
+
+# TypeScript
+*.tsbuildinfo
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
