@@ -40,6 +40,7 @@ jobs:
         cache-dependency-path: |
           commons/package-lock.json
           vitest-api-tests/package-lock.json
+          playwright-api-tests/package-lock.json
 
     - name: Cache NuGet packages
       uses: actions/cache@v4
@@ -59,20 +60,9 @@ jobs:
         cd commons
         npm test
 
-    - name: Restore .NET dependencies
+    - name: Restore and test .NET projects
       run: |
-        cd UniverseService
-        dotnet restore
-
-    - name: Build .NET service
-      run: |
-        cd UniverseService
-        dotnet build --no-restore -c Release
-
-    - name: Run .NET unit tests
-      run: |
-        cd UniverseService.Tests
-        dotnet test --no-build --verbosity normal
+        dotnet test UniverseService.Tests/UniverseService.Tests.csproj -c Release --verbosity normal
 
     - name: Build and start Universe Service
       run: |
