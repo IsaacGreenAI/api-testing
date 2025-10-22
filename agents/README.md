@@ -4,67 +4,86 @@ This directory contains specialized agent templates for use with Claude Code's T
 
 ## 📁 Available Agents
 
-### 🤖 API Automation Specialist
-**File:** `api-automation-specialist.md`  
-**Specialization:** Test automation frameworks, CI/CD integration, automated validation  
-**Key Focus:** Jest/RestAssured frameworks, contract testing, data-driven testing, pipeline integration
+### 🧪 Vitest API Testing Specialist
+**File:** `vitest-api-testing-specialist.md`
+**Specialization:** Modern API testing with Vitest, ES Modules, TypeScript
+**Key Focus:** Vitest framework, mocking strategies, coverage, CI/CD integration, async patterns
+**Official Docs:** https://vitest.dev
 
 **Quick Usage:**
 ```typescript
 Task({
   subagent_type: "general-purpose",
-  description: "API test automation framework", 
-  prompt: `[See api-automation-specialist.md template]
-  
-SPECIFIC TASK: Design comprehensive test automation framework for microservices platform`
+  description: "Build Vitest API test suite",
+  prompt: `[See vitest-api-testing-specialist.md template]
+
+SPECIFIC TASK: Create comprehensive integration tests for Universe Service API with planets and galaxies endpoints using Vitest and TypeScript`
 })
 ```
 
-### 🔗 API Integration Tester
-**File:** `api-integration-tester.md`  
-**Specialization:** End-to-end workflows, third-party integrations, microservices communication  
-**Key Focus:** Service integration, event-driven testing, external API validation, resilience testing
+### 🎭 Playwright API Testing Specialist
+**File:** `playwright-api-testing-specialist.md`
+**Specialization:** Server-side API testing with Playwright's APIRequestContext
+**Key Focus:** Pure API testing, mixed UI+API testing, storage state, fixtures, parallel execution
+**Official Docs:** https://playwright.dev
 
 **Quick Usage:**
 ```typescript
 Task({
   subagent_type: "general-purpose",
-  description: "Integration testing strategy", 
-  prompt: `[See api-integration-tester.md template]
-  
-SPECIFIC TASK: Test payment gateway integrations with failure scenario validation`
+  description: "Build Playwright API tests",
+  prompt: `[See playwright-api-testing-specialist.md template]
+
+SPECIFIC TASK: Design API test suite using APIRequestContext with authentication and CRUD validation for user management endpoints`
+})
+```
+
+### ☕ Mocha + Chai API Testing Specialist
+**File:** `mocha-chai-api-testing-specialist.md`
+**Specialization:** Flexible API testing with Mocha framework and Chai assertions
+**Key Focus:** BDD/TDD patterns, async testing, Supertest integration, Sinon mocking, multiple assertion styles
+**Official Docs:** https://mochajs.org | https://www.chaijs.com
+
+**Quick Usage:**
+```typescript
+Task({
+  subagent_type: "general-purpose",
+  description: "Build Mocha+Chai API tests",
+  prompt: `[See mocha-chai-api-testing-specialist.md template]
+
+SPECIFIC TASK: Implement Express API test suite with Mocha, Chai, and Supertest including route testing and middleware validation`
 })
 ```
 
 ### 📚 API Documentation Analyst
-**File:** `api-documentation-analyst.md`  
-**Specialization:** OpenAPI specifications, developer experience, documentation quality  
-**Key Focus:** Technical writing, DX optimization, interactive docs, compliance documentation
+**File:** `api-documentation-analyst.md`
+**Specialization:** OpenAPI specifications, developer experience, documentation quality
+**Key Focus:** Technical writing, DX optimization, Swagger/OpenAPI, interactive docs
 
 **Quick Usage:**
 ```typescript
 Task({
   subagent_type: "general-purpose",
-  description: "API documentation analysis", 
+  description: "API documentation analysis",
   prompt: `[See api-documentation-analyst.md template]
-  
-SPECIFIC TASK: Analyze and improve developer portal documentation for public API platform`
+
+SPECIFIC TASK: Review and improve Universe Service API Swagger documentation for developer experience and completeness`
 })
 ```
 
 ### 💻 C# Microservices Expert
-**File:** `csharp-microservices-expert.md`  
-**Specialization:** .NET ecosystem development, microservices architecture, distributed systems  
-**Key Focus:** ASP.NET Core, Entity Framework, Azure/AWS integration, enterprise patterns
+**File:** `csharp-microservices-expert.md`
+**Specialization:** .NET ecosystem development, microservices architecture, distributed systems
+**Key Focus:** ASP.NET Core, Entity Framework, xUnit testing, Docker deployment, enterprise patterns
 
 **Quick Usage:**
 ```typescript
 Task({
   subagent_type: "general-purpose",
-  description: "C# microservices architecture", 
+  description: "C# microservices architecture",
   prompt: `[See csharp-microservices-expert.md template]
-  
-SPECIFIC TASK: Design enterprise API architecture using ASP.NET Core 8 with microservices patterns`
+
+SPECIFIC TASK: Enhance Universe Service with additional API endpoints, repository patterns, and comprehensive unit test coverage`
 })
 ```
 
@@ -81,6 +100,8 @@ SPECIFIC TASK: Design enterprise API architecture using ASP.NET Core 8 with micr
 
 Each agent includes:
 - **Overview** - Agent's purpose and specialization
+- **Official Documentation References** - Links to official docs for the technology
+- **Clarification Protocol** - Questions to ask users when requirements are ambiguous
 - **Full Prompt Template** - Complete Task tool template
 - **Usage Examples** - Common scenarios and implementations
 - **Task Categories** - Organized use cases
@@ -92,20 +113,24 @@ Each agent includes:
 ### Creating Effective Agent Prompts
 - Be specific about expertise areas and methodologies
 - Include clear deliverable standards and format expectations
+- Reference official documentation for all recommendations
+- Ask clarifying questions when requirements are ambiguous
 - Consider domain-specific constraints and considerations
 - Provide structured response formats
 - Include quality metrics and success criteria
 
 ### Using Agents Effectively
 - Always customize the `[INSERT_TASK_HERE]` section
-- Be specific with geographic, demographic, or technical constraints
+- Be specific with technical constraints and requirements
+- Answer clarifying questions for better results
 - Test prompts with realistic scenarios
 - Combine agents for complex multi-domain tasks
 - Save successful prompt variations for reuse
 
 ### Agent Development Guidelines
 - Focus on deep domain expertise rather than broad generalization
-- Include real-world constraints and considerations
+- Include official documentation references
+- Implement clarification protocols for ambiguous requirements
 - Provide multiple usage examples across different scenarios
 - Structure templates for easy customization
 - Include troubleshooting and edge case handling
@@ -113,47 +138,87 @@ Each agent includes:
 ## 🛠️ Adding New Agents
 
 ### File Naming Convention
-`[domain]-[specialization]-[optional-modifier].md`
+`[technology]-[specialization].md`
 
 Examples:
-- `data-validation-specialist.md`
-- `finance-investment-analyst.md`
-- `healthcare-clinical-researcher.md`
-- `legal-contract-analyzer.md`
+- `vitest-api-testing-specialist.md`
+- `playwright-api-testing-specialist.md`
+- `graphql-schema-specialist.md`
+- `docker-compose-specialist.md`
 
 ### Required Sections
 1. **Overview** - Purpose and scope
-2. **Agent Template** - Full Task tool prompt
-3. **Usage Examples** - 3-5 realistic scenarios
-4. **Task Categories** - Organized use cases
-5. **Customization Variables** - Placeholder guide
-6. **Success Metrics** - Quality standards
+2. **Official Documentation References** - Links to official docs
+3. **Agent Template** - Full Task tool prompt with clarification protocol
+4. **Usage Examples** - 3-5 realistic scenarios
+5. **Task Categories** - Organized use cases
+6. **Customization Variables** - Placeholder guide
+7. **Success Metrics** - Quality standards
 
 ### Update Index
 Add new agents to this README with:
 - Brief description and key focus areas
+- Official documentation links
 - Quick usage example
 - Link to detailed documentation
 
-## 💡 Future Agent Development Ideas
+## 💡 Repository Alignment
 
-### Advanced API Specialists
-- **GraphQL Schema Analyst** - Schema design, query optimization, federation strategies
-- **API Gateway Architect** - Kong/Ambassador configuration, policy management
-- **WebSocket Testing Expert** - Real-time communication testing, connection management
-- **gRPC Service Validator** - Protocol buffer validation, streaming service testing
+This agent library is specifically tailored to the **api-testing** repository's technology stack:
 
-### Domain-Specific API Experts
-- **Healthcare API Compliance** - FHIR standards, HIPAA compliance, medical data validation
-- **Financial API Specialist** - Payment processing validation, transaction testing
-- **IoT API Specialist** - Device communication, telemetry validation, edge computing
-- **Gaming API Specialist** - Real-time multiplayer, leaderboards, matchmaking systems
+### Testing Frameworks
+- ✅ **Vitest** (Primary framework - implemented)
+- ✅ **Playwright** (Work in progress)
+- ✅ **Mocha/Chai** (Work in progress)
 
-### Infrastructure and DevOps
-- **Kubernetes API Validator** - Custom resource definitions, operator testing
-- **Cloud API Integration** - Multi-cloud strategies, serverless API testing
-- **Database API Specialist** - Connection pooling, query optimization, caching strategies
-- **Monitoring API Specialist** - Metrics collection, alerting integration, observability
+### Backend Services
+- ✅ **ASP.NET Core** (UniverseService API)
+- ✅ **PostgreSQL** (Database)
+- ✅ **Docker** (Containerization)
+
+### Shared Libraries
+- ✅ **ES Modules** (ESM)
+- ✅ **TypeScript** (Type safety)
+- ✅ **SOLID Principles** (Interface-based design)
+- ✅ **HTTP Clients** (Axios, Fetch implementations)
+
+## 🎯 Agent Usage Patterns
+
+### Testing Framework Development
+Use framework-specific agents when:
+- Creating new test suites
+- Implementing integration tests
+- Setting up CI/CD pipelines
+- Configuring coverage reporting
+- Optimizing test performance
+
+**Recommended Agents:** Vitest, Playwright, or Mocha/Chai specialists
+
+### Backend Service Development
+Use C# Microservices Expert when:
+- Enhancing Universe Service API
+- Adding new endpoints or features
+- Implementing repository patterns
+- Writing unit tests for .NET code
+- Configuring Docker deployment
+
+**Recommended Agent:** C# Microservices Expert
+
+### Documentation and DX
+Use Documentation Analyst when:
+- Improving API documentation
+- Updating Swagger/OpenAPI specs
+- Creating developer guides
+- Enhancing README files
+- Documenting test patterns
+
+**Recommended Agent:** API Documentation Analyst
+
+### Multi-Domain Tasks
+Combine agents for comprehensive solutions:
+1. **C# Microservices Expert** → Build API endpoint
+2. **Vitest Specialist** → Create integration tests
+3. **Documentation Analyst** → Update Swagger docs
 
 ## 🔄 Agent Versioning
 
@@ -171,32 +236,27 @@ Update version info in agent files and this index when making significant change
 - Suggest additional usage examples
 - Identify common edge cases or limitations
 - Recommend prompt clarity improvements
+- Add official documentation references
 
 ### Quality Standards
 - All agents must work with `general-purpose` subagent type
 - Templates must be immediately usable without modification
+- Include official documentation references
+- Implement clarification protocols for ambiguous requirements
 - Examples should reflect realistic, practical scenarios
-- Documentation must be clear for non-technical users
+- Documentation must be clear and actionable
 
 ---
 
-**Last Updated:** January 2025  
-**Total Agents:** 5  
+**Last Updated:** October 2025
+**Total Agents:** 5
 **Status:** Production Ready
+**Repository:** api-testing (Vitest, Playwright, Mocha/Chai, ASP.NET Core)
 
-## 🎯 Agent Combination Strategies
+## 📚 Additional Resources
 
-### Comprehensive API Quality Assessment
-Combine multiple agents for complete API evaluation:
-1. **Documentation Analyst** → Ensure developer experience excellence
-2. **Integration Tester** → Validate end-to-end workflows  
-3. **Automation Specialist** → Streamline testing processes
-4. **Integration Tester** → Validate end-to-end workflows
-5. **Automation Specialist** → Implement continuous validation
-
-### API Development Lifecycle Integration
-- **Design Phase:** Documentation Analyst + Integration Tester
-- **Development Phase:** Automation Specialist + Documentation Analyst
-- **Testing Phase:** Integration Tester + Automation Specialist
-- **Production Phase:** Integration Tester + Automation Specialist
-- **Maintenance Phase:** Documentation Analyst + All specialists for ongoing optimization
+- **Vitest Documentation**: https://vitest.dev
+- **Playwright Documentation**: https://playwright.dev
+- **Mocha Documentation**: https://mochajs.org
+- **Chai Documentation**: https://www.chaijs.com
+- **ASP.NET Core Documentation**: https://docs.microsoft.com/aspnet/core

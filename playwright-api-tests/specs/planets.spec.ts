@@ -1,5 +1,5 @@
-import { describe, it, expect, beforeAll } from 'vitest';
-import { FetchHttpClient, TResponse } from '../../commons';
+import { test, expect } from '../fixtures/httpClient.fixture.ts';
+import { TResponse } from '@commons/http-client/TResponse.ts';
 
 const BASE_URL = process.env.UNIVERSE_API_URL || 'http://localhost:8080';
 
@@ -14,15 +14,9 @@ interface Planet {
   hasAtmosphere: boolean;
 }
 
-describe('Planets API Endpoints', () => {
-  let httpClient: FetchHttpClient;
-
-  beforeAll(() => {
-    httpClient = new FetchHttpClient();
-  });
-
-  describe('GET /api/planets', () => {
-    it('should return all planets', async () => {
+test.describe('Planets API Endpoints', () => {
+  test.describe('GET /api/planets', () => {
+    test('should return all planets', async ({ httpClient }) => {
       const response: TResponse<Planet[]> = await httpClient.get<Planet[]>(`${BASE_URL}/api/planets`);
 
       expect(response.isSuccess).toBe(true);
@@ -31,7 +25,7 @@ describe('Planets API Endpoints', () => {
       expect(response.data!.length).toBeGreaterThan(0);
     });
 
-    it('should return planets with correct schema', async () => {
+    test('should return planets with correct schema', async ({ httpClient }) => {
       const response: TResponse<Planet[]> = await httpClient.get<Planet[]>(`${BASE_URL}/api/planets`);
 
       expect(response.isSuccess).toBe(true);
@@ -47,8 +41,8 @@ describe('Planets API Endpoints', () => {
     });
   });
 
-  describe('POST /api/planets', () => {
-    it('should create a new planet', async () => {
+  test.describe('POST /api/planets', () => {
+    test('should create a new planet', async ({ httpClient }) => {
       const newPlanet: Planet = {
         name: `Kepler-452b ${Date.now()}`,
         type: 'Exoplanet',
@@ -75,7 +69,7 @@ describe('Planets API Endpoints', () => {
       expect(response.data!.id).toBeDefined();
     });
 
-    it('should reject planet creation with invalid data', async () => {
+    test('should reject planet creation with invalid data', async ({ httpClient }) => {
       const invalidPlanet = {
         name: '', // Empty name - violates MinLength validation
         type: '', // Empty type - violates MinLength validation
@@ -94,8 +88,8 @@ describe('Planets API Endpoints', () => {
     });
   });
 
-  describe('GET /api/planets/{id}', () => {
-    it('should return planet by ID', async () => {
+  test.describe('GET /api/planets/{id}', () => {
+    test('should return planet by ID', async ({ httpClient }) => {
       const response: TResponse<Planet> = await httpClient.get<Planet>(`${BASE_URL}/api/planets/1`);
 
       expect(response.isSuccess).toBe(true);
@@ -104,7 +98,7 @@ describe('Planets API Endpoints', () => {
       expect(response.data!.name).toBeDefined();
     });
 
-    it('should return 404 for non-existent planet', async () => {
+    test('should return 404 for non-existent planet', async ({ httpClient }) => {
       const response: TResponse<Planet[]> = await httpClient.get(`${BASE_URL}/api/planets/999999`);
 
       expect(response.isClientError).toBe(true);
@@ -112,8 +106,8 @@ describe('Planets API Endpoints', () => {
     });
   });
 
-  describe('GET /api/planets/galaxy/{galaxyId}', () => {
-    it('should return planets filtered by galaxy', async () => {
+  test.describe('GET /api/planets/galaxy/{galaxyId}', () => {
+    test('should return planets filtered by galaxy', async ({ httpClient }) => {
       const response: TResponse<Planet[]> = await httpClient.get<Planet[]>(`${BASE_URL}/api/planets/galaxy/1`);
 
       expect(response.isSuccess).toBe(true);
@@ -127,8 +121,8 @@ describe('Planets API Endpoints', () => {
     });
   });
 
-  describe('GET /api/planets/type/{type}', () => {
-    it('should return planets filtered by type', async () => {
+  test.describe('GET /api/planets/type/{type}', () => {
+    test('should return planets filtered by type', async ({ httpClient }) => {
       const response: TResponse<Planet[]> = await httpClient.get<Planet[]>(`${BASE_URL}/api/planets/type/Terrestrial`);
 
       expect(response.isSuccess).toBe(true);
@@ -142,8 +136,8 @@ describe('Planets API Endpoints', () => {
     });
   });
 
-  describe('GET /api/planets/with-atmosphere', () => {
-    it('should return only planets with atmosphere', async () => {
+  test.describe('GET /api/planets/with-atmosphere', () => {
+    test('should return only planets with atmosphere', async ({ httpClient }) => {
       const response: TResponse<Planet[]> = await httpClient.get<Planet[]>(`${BASE_URL}/api/planets/with-atmosphere`);
 
       expect(response.isSuccess).toBe(true);
@@ -157,8 +151,8 @@ describe('Planets API Endpoints', () => {
     });
   });
 
-  describe('PUT /api/planets/{id}', () => {
-    it('should update an existing planet', async () => {
+  test.describe('PUT /api/planets/{id}', () => {
+    test('should update an existing planet', async ({ httpClient }) => {
       // Create a planet first
       const newPlanet: Planet = {
         name: `Kepler-452b For Update ${Date.now()}`,
@@ -194,7 +188,7 @@ describe('Planets API Endpoints', () => {
       expect(response.status).toBe(200);
     });
 
-    it('should return 404 when updating non-existent planet', async () => {
+    test('should return 404 when updating non-existent planet', async ({ httpClient }) => {
       const updatedPlanet: Planet = {
         id: 999999,
         name: 'Non-existent',
@@ -216,8 +210,8 @@ describe('Planets API Endpoints', () => {
     });
   });
 
-  describe('DELETE /api/planets/{id}', () => {
-    it('should delete a planet', async () => {
+  test.describe('DELETE /api/planets/{id}', () => {
+    test('should delete a planet', async ({ httpClient }) => {
       // Create a planet first
       const newPlanet: Planet = {
         name: `Kepler-452b For Delete ${Date.now()}`,
@@ -244,7 +238,7 @@ describe('Planets API Endpoints', () => {
       expect(getResponse.status).toBe(404);
     });
 
-    it('should return 404 when deleting non-existent planet', async () => {
+    test('should return 404 when deleting non-existent planet', async ({ httpClient }) => {
       const response: TResponse<void> = await httpClient.delete(`${BASE_URL}/api/planets/999999`);
 
       expect(response.isClientError).toBe(true);

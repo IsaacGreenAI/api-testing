@@ -1,17 +1,11 @@
-import { describe, it, expect, beforeAll } from 'vitest';
-import { FetchHttpClient, TResponse } from '../../commons';
+import { test, expect } from '../fixtures/httpClient.fixture.ts';
+import { TResponse } from '@commons/http-client/TResponse.ts';
 
 const BASE_URL = process.env.UNIVERSE_API_URL || 'http://localhost:8080';
 
-describe('Health Check Endpoint', () => {
-  let httpClient: FetchHttpClient;
-
-  beforeAll(() => {
-    httpClient = new FetchHttpClient();
-  });
-
-  describe('GET /health', () => {
-    it('should return healthy status', async () => {
+test.describe('Health Check Endpoint', () => {
+  test.describe('GET /health', () => {
+    test('should return healthy status', async ({ httpClient }) => {
       const response: TResponse<string> = await httpClient.get<string>(`${BASE_URL}/health`);
 
       expect(response.isSuccess).toBe(true);
@@ -19,7 +13,7 @@ describe('Health Check Endpoint', () => {
       expect(response.data).toBe('Healthy');
     });
 
-    it('should respond quickly (performance check)', async () => {
+    test('should respond quickly (performance check)', async ({ httpClient }) => {
       const startTime = Date.now();
       const response: TResponse<object> = await httpClient.get(`${BASE_URL}/health`);
       const endTime = Date.now();
@@ -29,7 +23,7 @@ describe('Health Check Endpoint', () => {
       expect(responseTime).toBeLessThan(1000); // Should respond in under 1 second
     });
 
-    it('should have correct content-type header', async () => {
+    test('should have correct content-type header', async ({ httpClient }) => {
       const response: TResponse<object> = await httpClient.get(`${BASE_URL}/health`);
 
       expect(response.isSuccess).toBe(true);

@@ -12,10 +12,22 @@
   "keywords": ["api", "testing", "utilities", "http-client"],
   "author": "IKEAI",
   "license": "MIT",
-  "dependencies": {
-    "axios": "^1.7.4"
+  "dependencies": {},
+  "peerDependencies": {
+    "axios": "^1.7.0",
+    "@playwright/test": "^1.40.0"
+  },
+  "peerDependenciesMeta": {
+    "axios": {
+      "optional": true
+    },
+    "@playwright/test": {
+      "optional": true
+    }
   },
   "devDependencies": {
+    "axios": "^1.7.4",
+    "@playwright/test": "^1.56.0",
     "@types/node": "^22.5.0",
     "@vitest/coverage-v8": "^3.0.0",
     "typescript": "^5.5.4",

@@ -19,6 +19,9 @@
 .env
 .env.local
 
+# Claude AI settings (local configuration)
+.claude/
+
 # OS files
 .DS_Store
 Thumbs.db

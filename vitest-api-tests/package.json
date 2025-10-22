@@ -17,9 +17,7 @@
     "lint": "eslint ./specs/**/*.ts",
     "lint:fix": "eslint ./specs/**/*.ts --fix"
   },
-  "dependencies": {
-    "axios": "^1.12.2"
-  },
+  "dependencies": {},
   "devDependencies": {
     "@types/node": "^24.9.1",
     "@vitest/ui": "^3.2.4",
