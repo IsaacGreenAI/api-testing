@@ -58,7 +58,7 @@ docker-compose up --build
 **Run .NET Unit Tests**
 ```bash
 
-cd UniverseService.Tests/UniverseService.Tests
+cd UniverseService.Tests
 dotnet test
 ```
 
@@ -76,7 +76,43 @@ All tests are currently passing across the repository:
 
 **Prerequisites for API Tests**: Universe Service must be running (`docker-compose up --build` in UniverseService directory)
 
-## 📚 Documentation
+## � CI/CD Pipeline
+
+This repository includes a comprehensive CI/CD pipeline using GitHub Actions that:
+
+- **Runs all test suites** (223 tests across 4 frameworks)
+- **Builds Docker images** for the Universe Service
+- **Validates health checks** for containerized services
+- **Automated deployment** to Docker Hub on main branch pushes
+
+### Pipeline Features
+
+- **Multi-framework testing**: Vitest, Playwright, xUnit, and commons library tests
+- **Docker integration**: Builds and tests containerized services
+- **Database testing**: PostgreSQL service for integration tests
+- **Health validation**: Ensures services start and respond correctly
+- **Automated deployment**: Pushes images to Docker Hub on successful builds
+
+### Local CI/CD Simulation
+
+To simulate the CI/CD pipeline locally:
+
+```bash
+# Run all tests (simulates CI test job)
+npm test  # From commons/
+cd ../vitest-api-tests && npm test
+cd ../playwright-api-tests && npm install && npx playwright test
+cd ../UniverseService.Tests && dotnet test
+
+# Build and test Docker (simulates CI build job)
+cd UniverseService
+docker-compose build
+docker-compose up -d
+# Wait for health checks to pass
+docker-compose down
+```
+
+## �📚 Documentation
 
 - **[playwright-api-tests/README.md](playwright-api-tests/README.md)** - Playwright API tests (31 integration tests)
 - **[vitest-api-tests/README.md](vitest-api-tests/README.md)** - Integration tests with Vitest (31 tests)

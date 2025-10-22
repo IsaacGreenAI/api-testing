@@ -14,39 +14,23 @@ Modern API testing with Playwright Test, showcasing SOLID principles and ES Modu
 
 
 
-## Project Structure## Project Structure
+## Project Structure
 
+```
+playwright-api-tests/
+├── specs/                     # Integration tests for Universe Service API
+│   ├── health.spec.ts        # Health check endpoint tests
+│   ├── planets.spec.ts       # Planets CRUD operation tests
+│   └── galaxies.spec.ts      # Galaxies CRUD operation tests
+├── fixtures/                  # Custom Playwright fixtures
+│   └── httpClient.fixture.ts # PlaywrightHttpClient fixture
+├── playwright.config.ts       # Playwright configuration
+├── eslint.config.mjs         # ESLint 9 flat config
+├── tsconfig.json             # TypeScript config with allowImportingTsExtensions
+└── package.json              # ESM project ("type": "module")
+```
 
-
-``````
-
-playwright-api-tests/playwright-api-tests/
-
-├── specs/                     # Integration tests for Universe Service API├── specs/                     # Integration tests for Universe Service API
-
-│   ├── health.spec.ts        # Health check endpoint tests│   ├── health.spec.ts        # Health check endpoint tests
-
-│   ├── planets.spec.ts       # Planets CRUD operation tests│   ├── planets.spec.ts       # Planets CRUD operation tests
-
-│   └── galaxies.spec.ts      # Galaxies CRUD operation tests│   └── galaxies.spec.ts      # Galaxies CRUD operation tests
-
-├── fixtures/                  # Custom Playwright fixtures├── fixtures/                  # Custom Playwright fixtures
-
-│   └── httpClient.fixture.ts # PlaywrightHttpClient fixture│   └── httpClient.fixture.ts # PlaywrightHttpClient fixture
-
-├── playwright.config.ts       # Playwright configuration├── playwright.config.ts       # Playwright configuration
-
-├── eslint.config.mjs         # ESLint 9 flat config├── eslint.config.mjs         # ESLint 9 flat config
-
-├── tsconfig.json             # TypeScript config with allowImportingTsExtensions├── tsconfig.json             # TypeScript config with allowImportingTsExtensions
-
-└── package.json              # ESM project ("type": "module")└── package.json              # ESM project ("type": "module")
-
-``````
-
-
-
-## Installation## Installation
+## Installation
 
 
 
