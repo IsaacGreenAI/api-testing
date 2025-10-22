@@ -5,6 +5,7 @@ on:
     branches: [ main ]
   pull_request:
     branches: [ main ]
+  workflow_dispatch:  # Allows manual trigger from any branch
 
 jobs:
   test:
@@ -67,10 +68,10 @@ jobs:
     - name: Build and start Universe Service
       run: |
         cd UniverseService
-        docker-compose build
-        docker-compose up -d
+        docker compose build
+        docker compose up -d
         # Wait for services to be healthy
-        timeout 120 bash -c 'until docker-compose ps | grep -q "healthy"; do sleep 5; done'
+        timeout 120 bash -c 'until docker compose ps | grep -q "healthy"; do sleep 5; done'
 
     - name: Install dependencies (vitest tests)
       run: |
@@ -97,7 +98,7 @@ jobs:
       if: always()
       run: |
         cd UniverseService
-        docker-compose down
+        docker compose down
 
   build-and-deploy:
     needs: test
@@ -117,6 +118,6 @@ jobs:
     - name: Build and push Docker images
       run: |
         cd UniverseService
-        docker-compose build
+        docker compose build
         docker tag universeservice-universe-api ${{ secrets.DOCKER_HUB_USERNAME }}/universe-api:latest
         docker push ${{ secrets.DOCKER_HUB_USERNAME }}/universe-api:latest
