@@ -8,7 +8,7 @@ Shared utilities and HTTP clients for API testing across multiple frameworks.
 - ✅ **Authorization** - Fluent API for building auth headers (Basic, Bearer, Custom)
 - ✅ **Utilities** - Retry logic, sleep, URL builder, date formatting, regex patterns
 - ✅ **ES Modules** - Full ESM support with TypeScript
-- ✅ **Well Tested** - 75 unit tests with Vitest
+- ✅ **Well Tested** - Comprehensive unit test coverage with Vitest
 
 ## Installation
 
@@ -35,7 +35,7 @@ Tests are located in `commons-tests/`:
 
 ```
 commons/
-├── commons-tests/              # Unit tests (75 tests)
+├── commons-tests/              # Comprehensive unit tests
 │   ├── AxiosHttpClient.test.ts
 │   ├── FetchHttpClient.test.ts
 │   ├── PlaywrightHttpClient.test.ts
@@ -126,14 +126,6 @@ const url = urlBuilder('https://api.example.com/users/:id', { id: 123 });
 // Date formatting
 const formatDate = new FormatDate();
 const formatted = formatDate.withFormat('MM/dd/yyyy', new Date());
-```
-
-## Test Results
-
-```
-Test Files  9 passed (9)
-Tests      75 passed (75)
-Duration   ~1s
 ```
 
 All tests use Vitest with proper mocking for HTTP clients.

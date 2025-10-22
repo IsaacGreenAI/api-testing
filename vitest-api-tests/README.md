@@ -9,7 +9,7 @@ Modern API testing with Vitest, showcasing SOLID principles and ES Modules.
 - ✅ **SOLID Principles** - Interface-based HTTP client architecture
 - ✅ **FetchHttpClient** - Native fetch API implementation (no external HTTP dependencies)
 - ✅ **TypeScript** - Full type safety with strict mode
-- ✅ **Comprehensive Tests** - 31 integration tests
+- ✅ **Comprehensive Tests** - Full API integration test suite
 
 ## Project Structure
 
@@ -50,10 +50,10 @@ npm run test:coverage
 
 ### Integration Tests (specs/)
 
-API integration tests for Universe Service:
-- `health.spec.ts` - Health check endpoint (3 tests)
-- `planets.spec.ts` - Planets API endpoints (14 tests)
-- `galaxies.spec.ts` - Galaxies API endpoints (14 tests)
+Complete API integration test coverage for Universe Service:
+- `health.spec.ts` - Health check endpoint validation
+- `planets.spec.ts` - Complete planets CRUD operations, filtering, and edge cases
+- `galaxies.spec.ts` - Complete galaxies CRUD operations, filtering, and edge cases
 
 **Prerequisites**: Universe Service must be running at `http://localhost:8080`
 
@@ -92,7 +92,7 @@ export interface IHttpClient {
 
 **FetchHttpClient** - Uses native fetch API (no external dependencies):
 ```typescript
-import { FetchHttpClient } from '@commons/http-client/FetchHttpClient.js';
+import { FetchHttpClient, TResponse } from '../../commons';
 
 const client = new FetchHttpClient();
 const response = await client.get('http://api.example.com/planets');
@@ -110,17 +110,18 @@ Features:
 This project uses ES Modules:
 
 1. **package.json**: `"type": "module"`
-2. **Import extensions**: All imports use `.js` extensions
-3. **Vitest config**: Path alias `@commons` points to root commons folder
+2. **Barrel imports**: Uses `'../../commons'` to import from commons index
+3. **Vitest config**: Path alias `@commons` points to `../commons/index.ts`
 
 ```typescript
-// ✅ Correct ESM imports
-import { FetchHttpClient } from '@commons/http-client/FetchHttpClient.js';
-import { sleep } from './sleep.js';
+// ✅ Correct - Barrel import from commons
+import { FetchHttpClient, TResponse } from '../../commons';
 
-// ❌ Incorrect (will fail)
-import { FetchHttpClient } from '@commons/http-client/FetchHttpClient';
-import { sleep } from './sleep';
+// ✅ Also works - Using @commons alias
+import { FetchHttpClient, TResponse } from '@commons';
+
+// ❌ Incorrect - Direct file imports not used in this project
+import { FetchHttpClient } from '@commons/http-client/FetchHttpClient.js';
 ```
 
 ## Environment Variables
@@ -147,14 +148,14 @@ ESLint 9 with flat config (`eslint.config.mjs`):
 
 ## Test Results
 
-**Expected Output** (integration tests only):
+**Expected Output** (integration tests):
 ```
-✓ specs/health.spec.ts (3 tests)
-✓ specs/planets.spec.ts (14 tests)
-✓ specs/galaxies.spec.ts (14 tests)
+✓ specs/health.spec.ts
+✓ specs/planets.spec.ts
+✓ specs/galaxies.spec.ts
 
 Test Files  3 passed (3)
-Tests      31 passed (31)
+Tests      All passed
 ```
 
 **Note**: Commons unit tests (75+ tests) are run separately in the `../commons` directory.

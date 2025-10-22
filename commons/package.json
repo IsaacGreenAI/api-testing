@@ -13,17 +13,9 @@
   "author": "IKEAI",
   "license": "MIT",
   "dependencies": {},
-  "peerDependencies": {
+  "optionalDependencies": {
     "axios": "^1.7.0",
     "@playwright/test": "^1.40.0"
-  },
-  "peerDependenciesMeta": {
-    "axios": {
-      "optional": true
-    },
-    "@playwright/test": {
-      "optional": true
-    }
   },
   "devDependencies": {
     "axios": "^1.7.4",
