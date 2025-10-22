@@ -13,3 +13,4 @@ export { IHttpClient } from './IHttpClient.js';
 export { TResponse } from './TResponse.js';
 export { AxiosHttpClient } from './AxiosHttpClient.js';
 export { FetchHttpClient } from './FetchHttpClient.js';
+export { PlaywrightHttpClient } from './PlaywrightHttpClient.js';

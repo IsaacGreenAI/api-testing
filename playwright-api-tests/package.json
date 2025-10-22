@@ -1,0 +1,29 @@
+{
+  "name": "playwright-api-tests",
+  "version": "1.0.0",
+  "description": "Playwright API integration tests for the Universe Service",
+  "type": "module",
+  "author": "",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/IsaacGreenAI/api-testing"
+  },
+  "scripts": {
+    "test": "playwright test",
+    "test:ui": "playwright test --ui",
+    "test:headed": "playwright test --headed",
+    "test:debug": "playwright test --debug",
+    "test:report": "playwright show-report",
+    "lint": "eslint ./specs/**/*.ts ./fixtures/**/*.ts",
+    "lint:fix": "eslint ./specs/**/*.ts ./fixtures/**/*.ts --fix"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@playwright/test": "^1.56.0",
+    "@types/node": "^24.9.1",
+    "eslint": "^9.38.0",
+    "typescript": "5.9.3",
+    "typescript-eslint": "^8.46.2"
+  }
+}

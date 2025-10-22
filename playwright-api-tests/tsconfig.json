@@ -1,0 +1,35 @@
+{
+  "compilerOptions": {
+    "target": "ES2023",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "esModuleInterop": true,
+    "allowJs": true,
+    "checkJs": false,
+    "allowImportingTsExtensions": true,
+    "noEmit": true,
+    "strict": false,
+    "strictFunctionTypes": true,
+    "strictBindCallApply": true,
+    "noImplicitAny": false,
+    "noImplicitThis": true,
+    "strictNullChecks": false,
+    "strictPropertyInitialization": false,
+    "alwaysStrict": true,
+    "skipLibCheck": true,
+    "resolveJsonModule": true,
+    "baseUrl": "./",
+    "paths": {
+      "@commons": ["../commons/index.ts"],
+      "@commons/*": ["../commons/*"]
+    },
+    "types": ["node"]
+  },
+  "exclude": ["./node_modules", "./playwright-report", "./test-results"],
+  "include": [
+    "./specs/**/*.ts",
+    "./fixtures/**/*.ts",
+    "./commons-tests/**/*.ts",
+    "../commons/**/*.ts"
+  ]
+}

@@ -10,6 +10,7 @@ export { IHttpClient } from './http-client/IHttpClient.js';
 export { TResponse } from './http-client/TResponse.js';
 export { AxiosHttpClient } from './http-client/AxiosHttpClient.js';
 export { FetchHttpClient } from './http-client/FetchHttpClient.js';
+export { PlaywrightHttpClient } from './http-client/PlaywrightHttpClient.js';
 
 // Authorization exports
 export { AuthHeader, AuthorizationHeadersFactory } from './authorization-headers-factory.js';

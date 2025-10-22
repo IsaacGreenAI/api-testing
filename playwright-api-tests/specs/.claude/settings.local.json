@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(//c/repo/api-testing/vitest-api-tests/**)",
+      "Read(//c/repo/api-testing/playwright-api-tests/**)",
+      "Read(//c/repo/api-testing/agents/**)",
+      "Read(//c/repo/api-testing/commons/http-client/**)",
+      "Read(//c/repo/api-testing/commons/**)",
+      "Read(//c/repo/api-testing/**)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

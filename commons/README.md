@@ -4,11 +4,11 @@ Shared utilities and HTTP clients for API testing across multiple frameworks.
 
 ## Features
 
-- ✅ **HTTP Clients** - Interface-based clients (Axios & Fetch implementations)
+- ✅ **HTTP Clients** - Interface-based clients (Axios, Fetch & Playwright implementations)
 - ✅ **Authorization** - Fluent API for building auth headers (Basic, Bearer, Custom)
 - ✅ **Utilities** - Retry logic, sleep, URL builder, date formatting, regex patterns
 - ✅ **ES Modules** - Full ESM support with TypeScript
-- ✅ **Well Tested** - 59 unit tests with Vitest
+- ✅ **Well Tested** - 75 unit tests with Vitest
 
 ## Installation
 
@@ -35,9 +35,10 @@ Tests are located in `commons-tests/`:
 
 ```
 commons/
-├── commons-tests/              # Unit tests (59 tests)
+├── commons-tests/              # Unit tests (75 tests)
 │   ├── AxiosHttpClient.test.ts
 │   ├── FetchHttpClient.test.ts
+│   ├── PlaywrightHttpClient.test.ts
 │   ├── authorization-headers-factory.test.ts
 │   ├── format-date.test.ts
 │   ├── regex-matches.test.ts
@@ -48,7 +49,8 @@ commons/
 │   ├── IHttpClient.ts
 │   ├── TResponse.ts
 │   ├── AxiosHttpClient.ts
-│   └── FetchHttpClient.ts
+│   ├── FetchHttpClient.ts
+│   └── PlaywrightHttpClient.ts
 ├── authorization-headers-factory.ts
 ├── format-date.ts
 ├── regex-matches.ts
@@ -66,7 +68,7 @@ commons/
 ### HTTP Clients
 
 ```typescript
-import { AxiosHttpClient, FetchHttpClient } from './index.js';
+import { AxiosHttpClient, FetchHttpClient, PlaywrightHttpClient } from './index.js';
 
 // Using Axios
 const axiosClient = new AxiosHttpClient();
@@ -76,10 +78,18 @@ const response1 = await axiosClient.get('https://api.example.com/data');
 const fetchClient = new FetchHttpClient();
 const response2 = await fetchClient.post('https://api.example.com/data', { name: 'test' });
 
-// Both return TResponse<T> with helper methods
-if (response1.isSuccess) {
-  console.log(response1.data);
-}
+// Using Playwright (with request fixture from @playwright/test)
+import { test } from '@playwright/test';
+
+test('API test with Playwright client', async ({ request }) => {
+  const playwrightClient = new PlaywrightHttpClient(request);
+  const response = await playwrightClient.get('https://api.example.com/data');
+
+  // All implementations return TResponse<T> with helper methods
+  if (response.isSuccess) {
+    console.log(response.data);
+  }
+});
 ```
 
 ### Authorization Headers
@@ -121,8 +131,8 @@ const formatted = formatDate.withFormat('MM/dd/yyyy', new Date());
 ## Test Results
 
 ```
-Test Files  8 passed (8)
-Tests      59 passed (59)
+Test Files  9 passed (9)
+Tests      75 passed (75)
 Duration   ~1s
 ```
 

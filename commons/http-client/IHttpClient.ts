@@ -1,4 +1,4 @@
-import { TResponse } from './TResponse';
+import { TResponse } from './TResponse.js';
 
 /**
  * HTTP Client interface following SOLID principles

@@ -7,9 +7,9 @@ Modern API testing with Vitest, showcasing SOLID principles and ES Modules.
 - ✅ **Vitest** - Modern, fast test framework (Jest-compatible API)
 - ✅ **ES Modules** - Full ESM support with `.js` extensions
 - ✅ **SOLID Principles** - Interface-based HTTP client architecture
-- ✅ **Multiple HTTP Clients** - Axios and Fetch implementations
+- ✅ **FetchHttpClient** - Native fetch API implementation (no external HTTP dependencies)
 - ✅ **TypeScript** - Full type safety with strict mode
-- ✅ **Comprehensive Tests** - 69+ passing tests (unit + integration)
+- ✅ **Comprehensive Tests** - 31 integration tests
 
 ## Project Structure
 
@@ -75,7 +75,7 @@ npm test
 
 ## HTTP Client Architecture (SOLID)
 
-The project demonstrates SOLID principles with two HTTP client implementations:
+This project uses **FetchHttpClient** exclusively, demonstrating the native fetch API implementation.
 
 ### Interface (Dependency Inversion)
 
@@ -88,29 +88,22 @@ export interface IHttpClient {
 }
 ```
 
-### Implementations
+### FetchHttpClient Implementation
 
-**AxiosHttpClient** - Uses axios library (used in planets.spec.ts):
-```typescript
-import { AxiosHttpClient } from '@commons/http-client/AxiosHttpClient.js';
-
-const client = new AxiosHttpClient();
-const response = await client.get('http://api.example.com/planets');
-```
-
-**FetchHttpClient** - Uses native fetch API (used in galaxies.spec.ts):
+**FetchHttpClient** - Uses native fetch API (no external dependencies):
 ```typescript
 import { FetchHttpClient } from '@commons/http-client/FetchHttpClient.js';
 
 const client = new FetchHttpClient();
-const response = await client.get('http://api.example.com/galaxies');
+const response = await client.get('http://api.example.com/planets');
 ```
 
-Both implementations:
-- Return `TResponse<T>` with helper methods (`isSuccess`, `isClientError`, `isServerError`)
-- Support all HTTP methods (GET, POST, PUT, DELETE, PATCH, OPTIONS, HEAD)
-- Handle errors gracefully
-- Support headers and query parameters
+Features:
+- Returns `TResponse<T>` with helper methods (`isSuccess`, `isClientError`, `isServerError`)
+- Supports all HTTP methods (GET, POST, PUT, DELETE, PATCH, OPTIONS, HEAD)
+- Handles errors gracefully
+- Supports headers and query parameters
+- Zero external HTTP library dependencies
 
 ## ESM Configuration
 
@@ -122,11 +115,11 @@ This project uses ES Modules:
 
 ```typescript
 // ✅ Correct ESM imports
-import { AxiosHttpClient } from '@commons/http-client/AxiosHttpClient.js';
+import { FetchHttpClient } from '@commons/http-client/FetchHttpClient.js';
 import { sleep } from './sleep.js';
 
 // ❌ Incorrect (will fail)
-import { AxiosHttpClient } from '@commons/http-client/AxiosHttpClient';
+import { FetchHttpClient } from '@commons/http-client/FetchHttpClient';
 import { sleep } from './sleep';
 ```
 
@@ -164,7 +157,7 @@ Test Files  3 passed (3)
 Tests      31 passed (31)
 ```
 
-**Note**: Commons unit tests (59 tests) are now run separately in the `../commons` directory.
+**Note**: Commons unit tests (75+ tests) are run separately in the `../commons` directory.
 
 ## Troubleshooting
 
