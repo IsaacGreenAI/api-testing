@@ -87,6 +87,23 @@ SPECIFIC TASK: Enhance Universe Service with additional API endpoints, repositor
 })
 ```
 
+### 🚀 GitHub Actions Pipeline Specialist
+**File:** `github-actions-pipeline-specialist.md`
+**Specialization:** CI/CD pipeline design, workflow optimization, enterprise automation
+**Key Focus:** GitHub Actions workflows, multi-technology pipelines, security hardening, deployment automation, caching strategies
+**Official Docs:** https://docs.github.com/en/actions
+
+**Quick Usage:**
+```typescript
+Task({
+  subagent_type: "general-purpose",
+  description: "Build CI/CD pipeline",
+  prompt: `[See github-actions-pipeline-specialist.md template]
+
+SPECIFIC TASK: Design complete CI/CD pipeline for Node.js and .NET project with testing, Docker builds, and deployment automation`
+})
+```
+
 ---
 
 ## 🚀 How to Use Agents
@@ -249,9 +266,9 @@ Update version info in agent files and this index when making significant change
 ---
 
 **Last Updated:** October 2025
-**Total Agents:** 5
+**Total Agents:** 6
 **Status:** Production Ready
-**Repository:** api-testing (Vitest, Playwright, Mocha/Chai, ASP.NET Core)
+**Repository:** api-testing (Vitest, Playwright, Mocha/Chai, ASP.NET Core, GitHub Actions)
 
 ## 📚 Additional Resources
 
@@ -260,3 +277,4 @@ Update version info in agent files and this index when making significant change
 - **Mocha Documentation**: https://mochajs.org
 - **Chai Documentation**: https://www.chaijs.com
 - **ASP.NET Core Documentation**: https://docs.microsoft.com/aspnet/core
+- **GitHub Actions Documentation**: https://docs.github.com/en/actions

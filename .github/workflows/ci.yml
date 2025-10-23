@@ -1,0 +1,170 @@
+name: CI - Pull Request Tests
+
+on:
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+# Minimal permissions (security best practice)
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  # Job 1: Commons Library Unit Tests (Vitest)
+  commons-tests:
+    name: Commons Library Tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+          cache-dependency-path: commons/package-lock.json
+
+      - name: Install dependencies
+        working-directory: commons
+        run: npm ci
+
+      - name: Run unit tests
+        working-directory: commons
+        run: npm test
+
+  # Job 2: .NET Unit Tests (xUnit)
+  dotnet-unit-tests:
+    name: .NET Unit Tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+
+      - name: Cache NuGet packages
+        uses: actions/cache@v4
+        with:
+          path: ~/.nuget/packages
+          key: ${{ runner.os }}-nuget-${{ hashFiles('**/packages.lock.json', '**/*.csproj') }}
+          restore-keys: |
+            ${{ runner.os }}-nuget-
+
+      - name: Restore dependencies
+        run: dotnet restore UniverseService.Tests/UniverseService.Tests.csproj
+
+      - name: Run .NET tests
+        run: dotnet test UniverseService.Tests/UniverseService.Tests.csproj --configuration Release --no-restore --verbosity normal
+
+  # Job 3: Integration Tests (requires Universe Service)
+  integration-tests:
+    name: API Integration Tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+          cache-dependency-path: |
+            vitest-api-tests/package-lock.json
+            playwright-api-tests/package-lock.json
+
+      - name: Create .env file for Universe Service
+        working-directory: UniverseService
+        run: |
+          cat > .env << EOF
+          POSTGRES_USER=testuser
+          POSTGRES_PASSWORD=testpass
+          POSTGRES_DB=universedb
+          ConnectionStrings__UniverseDatabase=Host=postgres;Port=5432;Database=universedb;Username=testuser;Password=testpass
+          EOF
+
+      - name: Build and start Universe Service
+        working-directory: UniverseService
+        run: |
+          docker compose build
+          docker compose up -d
+
+      - name: Wait for services to be healthy
+        working-directory: UniverseService
+        run: |
+          echo "Waiting for PostgreSQL to be healthy..."
+          timeout 120 bash -c 'until docker compose ps postgres | grep -q "healthy"; do sleep 2; done'
+          echo "Waiting for Universe API to be healthy..."
+          timeout 120 bash -c 'until docker compose ps universe-api | grep -q "healthy"; do sleep 2; done'
+          echo "Services are ready!"
+          docker compose ps
+
+      - name: Verify API is responding
+        run: |
+          curl -f http://localhost:8080/health || (echo "Health check failed" && exit 1)
+          echo "API is responding correctly"
+
+      # Run Vitest and Playwright tests in parallel
+      - name: Install Vitest test dependencies
+        working-directory: vitest-api-tests
+        run: npm ci
+
+      - name: Install Playwright test dependencies
+        working-directory: playwright-api-tests
+        run: |
+          npm ci
+          npx playwright install --with-deps chromium
+
+      - name: Run Vitest API tests
+        working-directory: vitest-api-tests
+        run: npm test
+
+      - name: Run Playwright API tests
+        working-directory: playwright-api-tests
+        run: npx playwright test
+
+      - name: Upload Playwright report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: playwright-api-tests/playwright-report/
+          retention-days: 7
+
+      - name: Stop Universe Service
+        if: always()
+        working-directory: UniverseService
+        run: |
+          docker compose logs
+          docker compose down -v
+
+  # Summary job to check if all tests passed
+  all-tests-passed:
+    name: All Tests Passed
+    runs-on: ubuntu-latest
+    needs: [commons-tests, dotnet-unit-tests, integration-tests]
+    if: always()
+
+    steps:
+      - name: Check test results
+        run: |
+          if [[ "${{ needs.commons-tests.result }}" == "success" && \
+                "${{ needs.dotnet-unit-tests.result }}" == "success" && \
+                "${{ needs.integration-tests.result }}" == "success" ]]; then
+            echo "✅ All tests passed!"
+            exit 0
+          else
+            echo "❌ One or more test jobs failed"
+            echo "Commons Tests: ${{ needs.commons-tests.result }}"
+            echo ".NET Unit Tests: ${{ needs.dotnet-unit-tests.result }}"
+            echo "Integration Tests: ${{ needs.integration-tests.result }}"
+            exit 1
+          fi
