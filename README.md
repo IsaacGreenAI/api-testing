@@ -76,41 +76,52 @@ Comprehensive test coverage across the entire repository:
 **Test Suites**: Health checks, CRUD operations, filtering, querying, error handling, and edge cases
 **Prerequisites for API Tests**: Universe Service must be running (`docker-compose up --build` in UniverseService directory)
 
-## � CI/CD Pipeline
+## 🔄 CI Pipeline
 
-This repository includes a comprehensive CI/CD pipeline using GitHub Actions that:
+This repository includes a comprehensive CI pipeline using GitHub Actions that runs on every pull request to `main`:
 
-- **Runs all test suites** across 4 frameworks
-- **Builds Docker images** for the Universe Service
-- **Validates health checks** for containerized services
-- **Automated deployment** to Docker Hub on main branch pushes
+### What the CI Pipeline Does
+
+- **✅ Runs all test suites** across 4 frameworks in parallel
+- **✅ Validates health checks** for containerized services
+- **✅ Blocks PR merging** until all tests pass
+
+### Pipeline Jobs
+
+1. **Commons Library Tests** - Vitest unit tests for shared utilities
+2. **.NET Unit Tests** - xUnit tests for UniverseService
+3. **API Integration Tests** - Spins up Docker Compose and runs:
+   - Vitest API integration tests
+   - Playwright API integration tests
+4. **Summary Job** - Ensures all tests passed
 
 ### Pipeline Features
 
-- **Multi-framework testing**: Vitest, Playwright, xUnit, and commons library tests
-- **Docker integration**: Builds and tests containerized services
-- **Database testing**: PostgreSQL service for integration tests
-- **Health validation**: Ensures services start and respond correctly
-- **Automated deployment**: Pushes images to Docker Hub on successful builds
+- **Parallel execution** - All test jobs run simultaneously for fast feedback (~5-8 min)
+- **Smart caching** - Node modules and NuGet packages cached between runs
+- **Docker integration** - Builds and tests containerized services with health checks
+- **Database testing** - PostgreSQL service for integration tests
+- **No secrets required** - CI runs entirely with public dependencies
 
-### Local CI/CD Simulation
+### Local CI Simulation
 
-To simulate the CI/CD pipeline locally:
+To run tests locally (simulates the CI pipeline):
 
 ```bash
-# Run all tests (simulates CI test job)
-npm test  # From commons/
-cd ../vitest-api-tests && npm test
-cd ../playwright-api-tests && npm install && npx playwright test
-cd ../UniverseService.Tests && dotnet test
-
-# Build and test Docker (simulates CI build job)
+# Terminal 1: Start Universe Service
 cd UniverseService
-docker-compose build
-docker-compose up -d
-# Wait for health checks to pass
-docker-compose down
+docker-compose up --build
+
+# Terminal 2: Run all tests
+cd commons && npm test
+cd ../UniverseService.Tests && dotnet test
+cd ../vitest-api-tests && npm test
+cd ../playwright-api-tests && npx playwright test
 ```
+
+### Branch Protection
+
+Pull requests to `main` require all CI tests to pass before merging. See [`.github/BRANCH_PROTECTION.md`](.github/BRANCH_PROTECTION.md) for setup instructions.
 
 ## �📚 Documentation
 
