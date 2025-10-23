@@ -127,10 +127,6 @@ cd ../vitest-api-tests && npm test
 cd ../playwright-api-tests && npx playwright test
 ```
 
-### Branch Protection
-
-Pull requests to `main` require all CI tests to pass before merging. See [`.github/BRANCH_PROTECTION.md`](.github/BRANCH_PROTECTION.md) for setup instructions.
-
 ## �📚 Documentation
 
 - **[playwright-api-tests/README.md](playwright-api-tests/README.md)** - Playwright API integration tests
