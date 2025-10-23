@@ -2,36 +2,175 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "Debug Jest Tests - Local",
+      "name": ".NET Core: Debug Unit Tests - Current File",
+      "type": "coreclr",
+      "request": "launch",
+      "preLaunchTask": "build",
+      "program": "dotnet",
+      "args": [
+        "test",
+        "${file}"
+      ],
+      "cwd": "${workspaceFolder}/UniverseService.Tests",
+      "console": "internalConsole",
+      "stopAtEntry": false
+    },
+    {
+      "name": ".NET Core: Debug Unit Tests - By Name",
+      "type": "coreclr",
+      "request": "launch",
+      "preLaunchTask": "build",
+      "program": "dotnet",
+      "args": [
+        "test",
+        "${workspaceFolder}/UniverseService.Tests/UniverseService.Tests.csproj",
+        "--filter",
+        "FullyQualifiedName~${input:testName}"
+      ],
+      "cwd": "${workspaceFolder}/UniverseService.Tests",
+      "console": "internalConsole",
+      "stopAtEntry": false
+    },
+    {
+      "name": "Debug Vitest Tests - Current File",
       "type": "node",
       "request": "launch",
-      "program": "${workspaceFolder}/api-automation-tests/node_modules/jest/.bin/jest.js",
-      "args": [
-        "--runInBand",
-        "<SPEC FILE NAME HERE>"
+      "runtimeExecutable": "npm",
+      "runtimeArgs": [
+        "run",
+        "test",
+        "--",
+        "--run",
+        "${file}"
       ],
       "console": "integratedTerminal",
       "internalConsoleOptions": "neverOpen",
-      "cwd": "${workspaceFolder}/api-automation-tests",
+      "cwd": "${workspaceFolder}/vitest-api-tests",
       "env": {
-        "TEST_ENV": "local"
+        "NODE_ENV": "test"
       }
     },
     {
-      "name": "Debug Jest Tests - Dev",
+      "name": "Debug Vitest Tests - By Name",
       "type": "node",
       "request": "launch",
-      "program": "${workspaceFolder}/api-automation-tests/node_modules/jest/.bin/jest.js",
-      "args": [
-        "--runInBand",
-        "<SPEC FILE NAME HERE>"
+      "runtimeExecutable": "npm",
+      "runtimeArgs": [
+        "run",
+        "test",
+        "--",
+        "--run",
+        "-t",
+        "${input:vitestTestName}"
       ],
       "console": "integratedTerminal",
       "internalConsoleOptions": "neverOpen",
-      "cwd": "${workspaceFolder}/api-automation-tests",
+      "cwd": "${workspaceFolder}/vitest-api-tests",
       "env": {
-        "TEST_ENV": "dev"
+        "NODE_ENV": "test"
       }
+    },
+    {
+      "name": "Debug Playwright Tests - Current File",
+      "type": "node",
+      "request": "launch",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": [
+        "run",
+        "test:debug",
+        "--",
+        "${file}"
+      ],
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen",
+      "cwd": "${workspaceFolder}/playwright-api-tests",
+      "env": {
+        "NODE_ENV": "test"
+      }
+    },
+    {
+      "name": "Debug Playwright Tests - By Name",
+      "type": "node",
+      "request": "launch",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": [
+        "run",
+        "test:debug",
+        "--",
+        "-g",
+        "${input:playwrightTestName}"
+      ],
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen",
+      "cwd": "${workspaceFolder}/playwright-api-tests",
+      "env": {
+        "NODE_ENV": "test"
+      }
+    },
+    {
+      "name": "Debug Commons Tests - Current File",
+      "type": "node",
+      "request": "launch",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": [
+        "run",
+        "test",
+        "--",
+        "--run",
+        "${file}"
+      ],
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen",
+      "cwd": "${workspaceFolder}/commons",
+      "env": {
+        "NODE_ENV": "test"
+      }
+    },
+    {
+      "name": "Debug Commons Tests - By Name",
+      "type": "node",
+      "request": "launch",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": [
+        "run",
+        "test",
+        "--",
+        "--run",
+        "-t",
+        "${input:commonsTestName}"
+      ],
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen",
+      "cwd": "${workspaceFolder}/commons",
+      "env": {
+        "NODE_ENV": "test"
+      }
+    }
+  ],
+  "inputs": [
+    {
+      "id": "testName",
+      "type": "promptString",
+      "description": "Enter the test method name or class name to filter",
+      "default": ""
+    },
+    {
+      "id": "vitestTestName",
+      "type": "promptString",
+      "description": "Enter the Vitest test name or pattern to filter",
+      "default": ""
+    },
+    {
+      "id": "playwrightTestName",
+      "type": "promptString",
+      "description": "Enter the Playwright test name or pattern to filter",
+      "default": ""
+    },
+    {
+      "id": "commonsTestName",
+      "type": "promptString",
+      "description": "Enter the Commons test name or pattern to filter",
+      "default": ""
     }
   ]
 }

@@ -30,6 +30,7 @@
     "./specs/**/*.ts",
     "./fixtures/**/*.ts",
     "./commons-tests/**/*.ts",
-    "../commons/**/*.ts"
+    "../commons/**/*.ts",
+    "./playwright.config.ts"
   ]
 }
