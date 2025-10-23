@@ -20,6 +20,14 @@ A modern API testing framework showcasing multiple testing frameworks (**Playwri
 
 ### Run Tests
 
+> **⚠️ Important**: Both Playwright and Vitest projects depend on the `commons` library. You must install commons dependencies first before running these test projects.
+
+**Install Commons Dependencies (Required)**
+```bash
+cd commons
+npm install
+```
+
 **Playwright API Tests**
 ```bash
 cd playwright-api-tests
