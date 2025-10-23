@@ -78,6 +78,7 @@ jobs:
           node-version: '22'
           cache: 'npm'
           cache-dependency-path: |
+            commons/package-lock.json
             vitest-api-tests/package-lock.json
             playwright-api-tests/package-lock.json
 
@@ -111,6 +112,11 @@ jobs:
         run: |
           curl -f http://localhost:8080/health || (echo "Health check failed" && exit 1)
           echo "API is responding correctly"
+
+      # Install commons dependencies (required by test projects)
+      - name: Install commons dependencies
+        working-directory: commons
+        run: npm ci
 
       # Run Vitest and Playwright tests in parallel
       - name: Install Vitest test dependencies
