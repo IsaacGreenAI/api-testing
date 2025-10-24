@@ -55,6 +55,13 @@ npm run test:coverage  # Generate coverage report
 
 ### Run Universe Service
 
+**Setup Environment (First Time Only)**
+```bash
+cd UniverseService
+cp .env.example .env
+# Edit .env if you want to change database credentials (optional)
+```
+
 **Start the API**
 ```bash
 cd UniverseService
@@ -69,6 +76,35 @@ docker-compose up --build
 cd UniverseService.Tests
 dotnet test
 ```
+
+## 🔐 Security & Best Practices
+
+**Important Note on Credentials:**
+
+This repository uses **simple database credentials** (`postgres/postgres`) for ease of demonstration and local development:
+- These credentials connect to **local Docker containers only** (no production systems)
+- The `.env` file is **gitignored** to demonstrate proper secret management
+- You must copy `.env.example` to `.env` before running (see Quick Start above)
+
+**Production Security Best Practices:**
+
+In production environments, you should:
+- ✅ **Use `.env` files** for environment-specific configuration (never commit them)
+- ✅ **Store secrets in secure vaults** (Azure Key Vault, AWS Secrets Manager, HashiCorp Vault)
+- ✅ **Use managed identities** or service principals for authentication
+- ✅ **Rotate credentials regularly** according to your security policy
+- ✅ **Apply principle of least privilege** for database users and service accounts
+- ✅ **Use strong, unique passwords** (not simple defaults like this demo)
+- ✅ **Enable audit logging** for credential access and usage
+- ✅ **Scan for exposed secrets** in your CI/CD pipeline
+
+**This repository demonstrates API testing architecture and best practices, not production security implementation.**
+
+The `.env.example` → `.env` pattern shown here is a common approach for:
+- Documenting required environment variables
+- Onboarding new developers quickly
+- Preventing accidental secret commits
+- Maintaining consistent local development environments
 
 ## ✅ Test Coverage
 
@@ -116,6 +152,11 @@ This repository includes a comprehensive CI pipeline using GitHub Actions that r
 To run tests locally (simulates the CI pipeline):
 
 ```bash
+# First time setup: Create .env file
+cd UniverseService
+cp .env.example .env
+cd ..
+
 # Terminal 1: Start Universe Service
 cd UniverseService
 docker-compose up --build
