@@ -34,6 +34,16 @@ Controller → Service → Repository → Database (PostgreSQL)
 
 ### Option 1: Run with Docker Compose (Recommended)
 
+**First Time Setup:**
+```bash
+# Copy environment file
+cp .env.example .env
+
+# (Optional) Edit .env to change database credentials
+# Default credentials work out-of-the-box for local development
+```
+
+**Start Services:**
 ```bash
 # Start all services (API + PostgreSQL)
 docker-compose up --build
@@ -44,6 +54,11 @@ curl http://localhost:8080/health
 # View Swagger UI
 open http://localhost:8080/swagger
 ```
+
+**Troubleshooting:**
+- If you get connection errors, ensure `.env` file exists (copy from `.env.example`)
+- If port 5432 is already in use, stop other PostgreSQL instances
+- If port 8080 is in use, modify the port mapping in `docker-compose.yml`
 
 ### Option 2: Run Locally (without Docker)
 
@@ -88,7 +103,15 @@ dotnet run
 
 ## Configuration
 
-Environment variables (see `.env` file):
+Environment variables are managed through the `.env` file:
+
+**Setup:**
+```bash
+# Copy the example file (first time only)
+cp .env.example .env
+```
+
+**Available Variables** (see `.env.example` for details):
 
 ```bash
 # PostgreSQL Configuration
@@ -99,6 +122,12 @@ POSTGRES_DB=universedb
 # Connection String Override
 ConnectionStrings__UniverseDatabase=Host=postgres;Port=5432;Database=universedb;Username=postgres;Password=postgres
 ```
+
+**Notes:**
+- The `.env` file is gitignored (never commit credentials)
+- Default values work for local development
+- Update credentials for production environments
+- See `.env.example` for production security best practices
 
 ## Development
 
